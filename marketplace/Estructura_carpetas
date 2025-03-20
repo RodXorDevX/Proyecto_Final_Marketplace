@@ -1,0 +1,66 @@
+marketplace/
+├── hito1_diseno_prototipo/
+│   ├── wireframes/
+│   │   ├── home.png
+│   │   ├── registro.png
+│   │   ├── login.png
+│   │   ├── perfil.png
+│   │   ├── crear-publicacion.png
+│   │   ├── galeria.png
+│   │   └── detalle-publicacion.png
+│   ├── prototipo/
+│   │   ├── figma/
+│   │   └── adobe-xd/
+│   ├── documentacion/
+│   │   ├── navegacion.md
+│   │   ├── dependencias.md
+│   │   ├── db_diagrama.png
+│   │   └── api_contrato.json
+│   └── README.md
+│
+├── hito2_frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── package.json
+│   └── README.md
+│
+├── hito3_backend/
+│   ├── config/
+│   │   └── db.js
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── models/
+│   ├── routes/
+│   ├── tests/
+│   ├── utils/
+│   ├── app.js
+│   ├── package.json
+│   └── README.md
+│
+├── hito4_integracion_despliegue/
+│   ├── client/
+│   ├── server/
+│   ├── database/
+│   ├── deploy_scripts/
+│   ├── config/
+│   │   └── env/
+│   ├── documentacion/
+│   │   └── manual_despliegue.md
+│   └── README.md
+│
+└── hito5_presentacion/
+    ├── presentacion_grupal/
+    │   ├── presentacion.pdf
+    │   ├── slides/
+    │   └── recursos/
+    └── videos_individuales/
+        ├── video_estudiante1.mp4
+        ├── video_estudiante2.mp4
+        └── video_estudiante3.mp4
