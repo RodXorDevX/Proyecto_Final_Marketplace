@@ -1,369 +1,222 @@
+
+# 📄 Contrato de Datos - API REST (con respuestas de error)
+
+---
+
+## 1. 🔐 Registrar nuevo usuario  
+**POST** `/registro`
+
+**Request Body:**
+```json
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Marketplace API",
-      "description": "API para un marketplace con usuarios, productos, carrito de compras y pedidos.",
-      "version": "1.0.0"
-    },
-    "servers": [
-      {
-        "url": "http://localhost:3000",
-        "description": "Servidor local"
-      }
-    ],
-    "paths": {
-      "/users": {
-        "post": {
-          "summary": "Crea un nuevo usuario",
-          "description": "Registra un usuario con email, contraseña y foto de perfil.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
-                    "picture": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Usuario creado",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer"
-                      },
-                      "email": {
-                        "type": "string"
-                      },
-                      "picture": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/login": {
-        "post": {
-          "summary": "Iniciar sesión",
-          "description": "Devuelve un token para autenticar al usuario.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Inicio de sesión exitoso",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "token": {
-                        "type": "string"
-                      },
-                      "user": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "email": {
-                            "type": "string"
-                          },
-                          "picture": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/products": {
-        "post": {
-          "summary": "Agrega un nuevo producto",
-          "description": "Permite a un usuario autenticado publicar un producto en el marketplace.",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "price": {
-                      "type": "number"
-                    },
-                    "category": {
-                      "type": "string"
-                    },
-                    "size": {
-                      "type": "string"
-                    },
-                    "images": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Producto creado"
-            }
-          }
-        },
-        "get": {
-          "summary": "Obtener productos",
-          "description": "Devuelve una lista de productos disponibles.",
-          "responses": {
-            "200": {
-              "description": "Lista de productos",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer"
-                        },
-                        "title": {
-                          "type": "string"
-                        },
-                        "price": {
-                          "type": "number"
-                        },
-                        "category": {
-                          "type": "string"
-                        },
-                        "size": {
-                          "type": "string"
-                        },
-                        "images": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/cart": {
-        "post": {
-          "summary": "Agrega un producto al carrito",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "integer"
-                    },
-                    "quantity": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Producto agregado al carrito"
-            }
-          }
-        },
-        "get": {
-          "summary": "Obtener contenido del carrito",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Contenido del carrito",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "integer"
-                      },
-                      "items": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "productId": {
-                              "type": "integer"
-                            },
-                            "title": {
-                              "type": "string"
-                            },
-                            "quantity": {
-                              "type": "integer"
-                            },
-                            "price": {
-                              "type": "number"
-                            },
-                            "size": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
-                      "totalPrice": {
-                        "type": "number"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/pedidos": {
-        "post": {
-          "summary": "Crear un pedido",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "responses": {
-            "201": {
-              "description": "Pedido creado",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "orderId": {
-                        "type": "integer"
-                      },
-                      "userId": {
-                        "type": "integer"
-                      },
-                      "items": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "productId": {
-                              "type": "integer"
-                            },
-                            "title": {
-                              "type": "string"
-                            },
-                            "quantity": {
-                              "type": "integer"
-                            },
-                            "size": {
-                              "type": "string"
-                            },
-                            "price": {
-                              "type": "number"
-                            }
-                          }
-                        }
-                      },
-                      "total": {
-                        "type": "number"
-                      },
-                      "status": {
-                        "type": "string",
-                        "example": "Pendiente"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "components": {
-      "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
-        }
-      }
-    }
+  "email": "nuevo_usuario@ejemplo.com",
+  "password": "contraseñaSegura123",
+  "nombre": "María González",
+  "direccion": "Avenida Principal 456, Ciudad, País"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 1,
+  "email": "nuevo_usuario@ejemplo.com",
+  "nombre": "María González",
+  "direccion": "Avenida Principal 456, Ciudad, País",
+  "created_at": "2025-03-21T10:00:00Z"
+}
+```
+
+**Errores comunes:**
+- `400 Bad Request`: Datos faltantes o formato inválido  
+  ```json
+  { "error": "El campo 'email' es obligatorio" }
+  ```
+- `409 Conflict`: El email ya está registrado  
+  ```json
+  { "error": "Ya existe un usuario con ese email" }
+  ```
+
+---
+
+## 2. 🛍️ Crear nuevo producto  
+**POST** `/productos`
+
+**Request Body:**
+```json
+{
+  "titulo": "Camiseta Deportiva",
+  "descripcion": "Camiseta de algodón 100%, ideal para actividades deportivas",
+  "precio": 29.99,
+  "categoria_id": 2,
+  "size": "M",
+  "stock": 50,
+  "imagen": "https://ejemplo.com/camiseta-deportiva.jpg",
+  "vendedor_id": 1
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 3,
+  "titulo": "Camiseta Deportiva",
+  "precio": 29.99,
+  "stock": 50,
+  "created_at": "2025-03-21T10:05:00Z"
+}
+```
+
+**Errores comunes:**
+- `400 Bad Request`: Campos inválidos o incompletos  
+  ```json
+  { "error": "El campo 'precio' debe ser numérico" }
+  ```
+- `404 Not Found`: `categoria_id` o `vendedor_id` no existe  
+  ```json
+  { "error": "La categoría especificada no existe" }
+  ```
+
+---
+
+## 3. 🛒 Agregar producto al carrito  
+**POST** `/carrito`
+
+**Request Body:**
+```json
+{
+  "usuario_id": 1,
+  "producto_id": 3,
+  "cantidad": 2
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 15,
+  "usuario_id": 1,
+  "producto_id": 3,
+  "cantidad": 2,
+  "subtotal": 59.98
+}
+```
+
+**Errores comunes:**
+- `400 Bad Request`: Datos inválidos o cantidad no válida  
+  ```json
+  { "error": "La cantidad debe ser mayor a 0" }
+  ```
+- `404 Not Found`: Usuario o producto no encontrado  
+  ```json
+  { "error": "Producto no encontrado" }
+  ```
+- `409 Conflict`: Stock insuficiente  
+  ```json
+  { "error": "No hay suficiente stock disponible" }
+  ```
+
+---
+
+## 4. 📂 Crear nueva categoría  
+**POST** `/categorias`
+
+**Request Body:**
+```json
+{
+  "nombre": "Electrónica"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 2,
+  "nombre": "Electrónica"
+}
+```
+
+**Errores comunes:**
+- `400 Bad Request`: Campo faltante o vacío  
+  ```json
+  { "error": "El nombre de la categoría es obligatorio" }
+  ```
+- `409 Conflict`: Categoría ya existente  
+  ```json
+  { "error": "La categoría ya existe" }
+  ```
+
+---
+
+## 5. 👤 Crear nuevo tipo de usuario  
+**POST** `/tipo-usuario`
+
+**Request Body:**
+```json
+{
+  "nombre": "Administrador"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 1,
+  "nombre": "Administrador"
+}
+```
+
+**Errores comunes:**
+- `400 Bad Request`: Campo vacío  
+  ```json
+  { "error": "El nombre del tipo de usuario es obligatorio" }
+  ```
+- `409 Conflict`: Ya existe ese tipo de usuario  
+  ```json
+  { "error": "Tipo de usuario ya registrado" }
+  ```
+
+---
+
+## 6. 🔑 Autenticar un usuario (Login)  
+**POST** `/login`
+
+**Request Body:**
+```json
+{
+  "email": "usuario@ejemplo.com",
+  "password": "contraseñaSegura123"
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "usuario": {
+    "id": 1,
+    "email": "usuario@ejemplo.com",
+    "nombre": "María González"
   }
+}
+```
+
+**Errores comunes:**
+- `400 Bad Request`: Falta email o password  
+  ```json
+  { "error": "Email y contraseña son requeridos" }
+  ```
+- `401 Unauthorized`: Credenciales incorrectas  
+  ```json
+  { "error": "Email o contraseña incorrectos" }
+  ```
+
+---
+
+## 🔧 Errores generales
+
+**500 Internal Server Error**  
+Puede aparecer en cualquier endpoint si ocurre un error inesperado en el servidor.
+```json
+{ "error": "Error interno del servidor. Intenta nuevamente más tarde." }
+```
