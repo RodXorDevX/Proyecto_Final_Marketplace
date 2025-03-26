@@ -1,13 +1,18 @@
 import Carousel from 'react-bootstrap/Carousel';
 import '../assets/css/Banner.css';
 
+// Importa las imágenes directamente
+import banner1 from '../assets/img/Fade_banner/Banner_1.png';
+import banner2 from '../assets/img/Fade_banner/Banner_2.jpg';
+import banner3 from '../assets/img/Fade_banner/Banner_3.jpg';
+
 function Banner() {
   return (
-    <Carousel className="banner-carousel" interval={3000} indicators={true}>
+    <Carousel className="banner-carousel" interval={2000} indicators={true}>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="../assets/img/Fade_banner/Banner_1.png"
+          src={banner1}
           alt="Fashion collection"
         />
         {/* Eliminar o comentar el caption si solo quieres mostrar imágenes */}
@@ -28,7 +33,7 @@ function Banner() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="../assets/img/Fade_banner/Banner_2.jpg"
+          src={banner2}
           alt="Summer collection"
         />
         {/* Eliminar o comentar el caption si solo quieres mostrar imágenes */}
@@ -37,7 +42,7 @@ function Banner() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="../assets/img/Fade_banner/Banner_3.jpg"
+          src={banner3}
           alt="Winter essentials"
         />
         {/* Eliminar o comentar el caption si solo quieres mostrar imágenes */}
