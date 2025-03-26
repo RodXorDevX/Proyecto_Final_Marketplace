@@ -1,27 +1,12 @@
 import GaleriaPublicaciones from "../components/GaleriaPublicaciones";
 import '../assets/css/Home.css';
 import { FaSearch, FaTwitter, FaFacebook, FaInstagram, FaShoppingBag, FaUser } from 'react-icons/fa';
-
+import  Banner from "../components/Banner";
 function Home() {
     return (
         <div className="home-container">
             {/* Banner Principal */}
-            <div className="banner">
-                <div className="banner-content">
-                    <div className="new-arrival">
-                        <div className="yellow-bar"></div>
-                        <div className="arrival-text">New</div>
-                    </div>
-                    <h1 className="banner-title">Arrival Fashion Women</h1>
-                    <p className="banner-product">Blazer for women</p>
-                </div>
-                <span className="banner-date">21/01/2029</span>
-                <div className="banner-image">
-                    <img src="/ruta-a-imagen-modelos-blazer.jpg" alt="Women wearing blazers" />
-                    <div className="product-text">BLAZER FOR WOMEN</div>
-                    <div className="discount-banner">50% OFF</div>
-                </div>
-            </div>
+           <Banner />
 
             {/* Sección de Búsqueda y Galería */}
             <div className="search-section">
