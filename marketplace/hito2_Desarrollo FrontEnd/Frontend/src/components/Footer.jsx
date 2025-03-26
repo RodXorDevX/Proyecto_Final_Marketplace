@@ -1,18 +1,26 @@
-import './Footer.css';
+import '../assets/css/Footer.css';
 import { FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 
 function Footer() {
     return (
         <footer className="footer">
-            <div className="copyright">
-                TREND'S 2025
-            </div>
-            <div className="social-container">
-                <p>Encuentranos en:</p>
-                <div className="social-links">
-                    <a href="#"><FaTwitter /></a>
-                    <a href="#"><FaFacebook /></a>
-                    <a href="#"><FaInstagram /></a>
+            <div className="footer-content">
+                <div className="copyright">
+                    TREND'S 2025
+                </div>
+                <div className="social-container">
+                    <p>Encuentranos en:</p>
+                    <div className="social-links">
+                        <a href="#" aria-label="Twitter">
+                            <FaTwitter />
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <FaFacebook />
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <FaInstagram />
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>
