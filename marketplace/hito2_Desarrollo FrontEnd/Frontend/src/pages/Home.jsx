@@ -1,5 +1,6 @@
 import GaleriaPublicaciones from "../components/GaleriaPublicaciones";
 import '../assets/css/Home.css';
+//import '../assets/css/SearchBar.css';
 import { FaSearch, FaTwitter, FaFacebook, FaInstagram, FaShoppingBag, FaUser } from 'react-icons/fa';
 import  Banner from "../components/Banner";
 function Home() {

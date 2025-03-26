@@ -95,6 +95,8 @@
   .search-section {
     display: flex;
     margin-bottom: 30px;
+    align-items: center;
+    gap: 20px;
   }
   
   .gallery-icon {
@@ -113,13 +115,13 @@
   }
   
   .search-container {
-    flex-grow: 1;
+    flex: 1;
     display: flex;
     align-items: center;
   }
   
   .search-box {
-    max-width: 400px;
+    width: 100%;
     position: relative;
   }
   
@@ -129,11 +131,12 @@
     border: none;
     border-radius: 25px;
     font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
   
   .search-button {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
