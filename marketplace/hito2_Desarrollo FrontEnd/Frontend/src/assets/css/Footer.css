@@ -3,9 +3,10 @@
     color: white;
     padding: 20px 40px;
     width: 100%;
-    position: relative;
+    position: fixed;
     bottom: 0;
     left: 0;
+    z-index: 1000;
 }
 
 .footer-content {
@@ -47,4 +48,9 @@
 
 .social-links a:hover {
     color: #ffc107;
+}
+
+/* Añadir padding-bottom al contenido principal para evitar que el footer lo tape */
+.page-container, .login-container, .home-container {
+    padding-bottom: 80px;
 }

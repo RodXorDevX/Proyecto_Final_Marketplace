@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/css/Register.css'; 
 import { Link } from "react-router-dom";
-import Footer from '../components/Footer';
 import registerImg from '../assets/img/Register/Sale_image.jpg';
 
 const Register = () => {

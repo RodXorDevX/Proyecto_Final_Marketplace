@@ -1,5 +1,6 @@
 .page-container {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   background-color: #0a1c3d;
@@ -105,7 +106,41 @@
   text-decoration: underline;
 }
 
-/* Eliminar los estilos que no se necesitan */
+/* Estilos del footer */
 .footer {
-  display: none;
+  width: 100%;
+  background-color: #0a1c3d;
+  padding: 1rem 0;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.footer .copyright {
+  margin-left: 20px;
+}
+
+.footer .social-container {
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer .social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.footer .social-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.footer .social-links a:hover {
+  color: #f2c94c;
 }
