@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/Login.css";
+import loginImg from "../assets/img/LoginPic.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -9,28 +10,9 @@ function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-   /*
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-    axios.post("http://localhost:3000/login", { email, password })
-    .then((res) => {
-        login(res.data); // Aquí guardamos el usuario y token en contexto
-        navigate("/perfil"); // Redirigimos al perfil o donde quieras
-      })
-      .catch((err) => {
-        alert("Credenciales inválidas");
-      });
-  };
-*/
-
-const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    console.log("Simulando login con:", email);
-  
-    // Simulación de usuario
     const datosFalsos = {
       token: "falso-token-456",
       usuario: {
@@ -39,28 +21,39 @@ const handleSubmit = (e) => {
         email: "ale@example.com"
       },
     };
-  
+
     login(datosFalsos);
     navigate("/perfil");
   };
-  
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Iniciar sesión</h2>
-      <input
-        type="email"
-        placeholder="Correo"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Ingresar</button>
-    </form>
+    <div className="login-container">
+      <div className="login-img">
+        <img src={loginImg} alt="Promo login" />
+      </div>
+
+      <div className="login-form">
+        <h2>INICIO DE SESIÓN</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">INICIAR SESIÓN</button>
+        </form>
+        <p className="registro-link">
+          ¿No tienes cuenta? <span onClick={() => navigate("/registro")}>Regístrate aquí</span>
+        </p>
+      </div>
+    </div>
   );
 }
 
