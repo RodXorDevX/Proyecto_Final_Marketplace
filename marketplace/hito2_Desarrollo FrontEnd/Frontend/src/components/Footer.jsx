@@ -1,6 +1,6 @@
 import '../assets/css/Footer.css';
 import { FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
-
+// Importa los iconos de las redes sociales
 function Footer() {
     return (
         <footer className="footer">
