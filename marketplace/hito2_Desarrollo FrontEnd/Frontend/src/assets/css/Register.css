@@ -1,163 +1,107 @@
 .page-container {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  background-color: #151c33;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #0a1c3d;
+  min-height: 100vh;
+  padding: 2rem 8rem;
+  gap: 8rem;
+  color: white;
 }
 
 .box {
-  flex: 1;
   display: flex;
-  background-color: #151c33;
-  padding: 0;
-  overflow: hidden;
-  min-height: calc(100vh - 60px);
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8rem;
+  width: 100%;
 }
 
 .box .imagen-izquierda {
-  flex: 1;
+  width: 600px;
+  height: 600px;
   background-image: url('../img/Register/Sale_image.jpg');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  background-color: #ffc107;
-  min-width: 50%;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
 }
 
 .box .registro {
-  flex: 1;
-  background-color: #1d2642; /* Un tono ligeramente más claro del #151c33 */
-  padding: 40px 60px;
+  width: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 534px;
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  gap: 1rem;
+  margin-left: auto;
+  background-color: transparent;
+  padding: 0;
+  box-shadow: none;
+  flex-shrink: 0;
 }
 
 .box .text-wrapper-2 {
-  color: #ffffff;
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 32px;
-  font-weight: 600;
+  color: white;
   text-align: center;
-  margin-bottom: 30px;
-  position: relative;
-  width: 100%;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
+}
+
+.box form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .input-field {
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  border: none;
+  font-size: 1rem;
   width: 100%;
-  height: 46px;
-  padding: 0 15px;
-  font-size: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  background-color: #ffffff;
-  color: #333333;
-  margin-bottom: 20px;
-  transition: border-color 0.3s ease;
+  height: 40px;
+  background-color: white;
+  margin-bottom: 0;
 }
 
 .input-field:focus {
   outline: none;
-  border-color: #ffc107;
-  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
-}
-
-.input-field::placeholder {
-  color: #757575;
+  border-color: #f2c94c;
 }
 
 .submit-btn {
-  background-color: #ffc107;
-  color: #151c33;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: 600;
+  background-color: #f2c94c;
+  color: #0a1c3d;
+  font-weight: bold;
   border: none;
-  border-radius: 5px;
+  padding: 0.8rem;
+  border-radius: 2rem;
   cursor: pointer;
+  margin-top: 1.5rem;
   width: 100%;
-  margin-top: 20px;
-  transition: all 0.3s ease;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-  background-color: #ffca28;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #e5b631;
 }
 
 .tienes-cuenta {
-  color: #ffffff;
-  font-family: "Inter-Light", Helvetica;
-  font-size: 16px;
   text-align: center;
-  margin-top: 20px;
-  position: relative;
-  width: 100%;
+  font-size: 0.9rem;
+  color: white;
+  margin-top: 0.5rem;
 }
 
-.text-wrapper-3 {
-  color: #ffffff;
-  font-weight: 600;
-  text-decoration: underline;
+.text-wrapper-3 .link-login {
+  color: #f2c94c;
+  font-weight: bold;
   cursor: pointer;
+  text-decoration: underline;
 }
 
-.text-wrapper-3:hover {
-  color: #e0e0e0;
-}
-
-/* Eliminar los estilos de overlap que no se necesitan */
-.overlap,
-.overlap-group,
-.div-wrapper,
-.overlap-group-2,
-.div {
-  display: none;
-}
-
-/* Estilos del footer */
+/* Eliminar los estilos que no se necesitan */
 .footer {
-  width: 100%;
-  background-color: #1d2642; /* El mismo color que el formulario */
-  padding: 20px 0;
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-  height: 60px;
-}
-
-.footer .copyright {
-  margin-left: 20px;
-}
-
-.footer .social-container {
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.footer .social-links {
-  display: flex;
-  gap: 15px;
-}
-
-.footer .social-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
-  transition: color 0.3s ease;
-}
-
-.footer .social-links a:hover {
-  color: #ffc107;
+  display: none;
 }
