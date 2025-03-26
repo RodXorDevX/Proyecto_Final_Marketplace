@@ -1,50 +1,98 @@
-import { useState } from "react";
+import "../assets/css/FormularioPublicacion.css";
+import React, { useRef, useState } from "react";
 
 function FormularioPublicacion() {
-  const [titulo, setTitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
-  const [imagen, setImagen] = useState("");
+  const inputRef = useRef(null);
+  const [imagenes, setImagenes] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const producto = {
-      titulo,
-      descripcion,
-      precio: parseFloat(precio),
-      imagen
-    };
-    console.log("Producto creado:", producto);
-    // Aquí luego agregas el POST a la API (/productos)
+  const handleImagenChange = (e) => {
+    const files = Array.from(e.target.files);
+    const nuevosArchivos = files.slice(0, 4 - imagenes.length);
+    const previews = nuevosArchivos.map((file) => URL.createObjectURL(file));
+    setImagenes((prev) => [...prev, ...previews]);
+    e.target.value = null;
+  };
+
+  const abrirSelector = () => {
+    if (imagenes.length >= 4) return;
+    inputRef.current.click();
+  };
+
+  const eliminarImagen = (index) => {
+    setImagenes((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Título"
-        value={titulo}
-        onChange={(e) => setTitulo(e.target.value)}
-      />
-      <textarea
-        placeholder="Descripción"
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Precio"
-        value={precio}
-        onChange={(e) => setPrecio(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="URL de imagen"
-        value={imagen}
-        onChange={(e) => setImagen(e.target.value)}
-      />
-      <button type="submit">Publicar</button>
-    </form>
+    <div className="formulario-publicacion-container">
+      <div className="imagenes-publicacion">
+        <div className="imagen-y-miniaturas">
+          {/* Imagen principal */}
+          <div className="zona-principal" onClick={abrirSelector}>
+            {imagenes[0] ? (
+              <>
+                <img src={imagenes[0]} alt="Principal" />
+                <button
+                  className="boton-eliminar"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    eliminarImagen(0);
+                  }}
+                >
+                  ×
+                </button>
+              </>
+            ) : (
+              <div className="texto-overlay">AÑADIR FOTOS</div>
+            )}
+          </div>
+
+          {/* Miniaturas */}
+          <div className="miniaturas-laterales">
+            {imagenes.slice(1).map((src, index) => (
+              <div key={index} className="miniatura-overlay">
+                <img src={src} alt={`Miniatura ${index + 1}`} />
+                <div className="numero-overlay">+{index + 1}</div>
+                <button
+                  className="boton-eliminar"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    eliminarImagen(index + 1);
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p className="titulo-imagenes">Título imágenes</p>
+        <p className="texto-subida" onClick={abrirSelector}>
+          Subir fotos (hasta 4)
+        </p>
+
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          ref={inputRef}
+          style={{ display: "none" }}
+          onChange={handleImagenChange}
+        />
+      </div>
+
+      {/* Formulario */}
+      <div className="formulario-container">
+        <h2>FORMULARIO DE PUBLICACIÓN</h2>
+        <form>
+          <input type="text" placeholder="TÍTULO" />
+          <input type="number" placeholder="Precio" />
+          <input type="text" placeholder="Categoría" />
+          <textarea placeholder="Descripción"></textarea>
+          <button type="submit">PUBLICAR</button>
+        </form>
+      </div>
+    </div>
   );
 }
 
