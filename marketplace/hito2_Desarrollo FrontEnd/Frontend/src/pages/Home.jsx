@@ -37,7 +37,7 @@ function Home() {
                 <h2 className="publications-heading">Publicaciones destacadas</h2>
                 <GaleriaPublicaciones />
             </div>
-            <Footer />
+           
         </div>
     );
 }
