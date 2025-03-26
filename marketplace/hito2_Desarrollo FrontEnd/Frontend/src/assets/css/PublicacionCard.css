@@ -1,0 +1,43 @@
+.publicacion-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 220px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.publicacion-card:hover {
+    transform: translateY(-5px);
+}
+
+.publicacion-card img {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+}
+
+.publicacion-card h4 {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.publicacion-card .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+
+.publicacion-card button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.publicacion-card button:hover {
+    background-color: #0056b3;
+}
