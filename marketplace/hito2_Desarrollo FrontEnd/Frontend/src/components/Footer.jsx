@@ -11,13 +11,13 @@ function Footer() {
                 <div className="social-container">
                     <p>Encuentranos en:</p>
                     <div className="social-links">
-                        <a href="#" aria-label="Twitter">
+                        <a href="https://x.com/" aria-label="Twitter">
                             <FaTwitter />
                         </a>
-                        <a href="#" aria-label="Facebook">
+                        <a href="https://www.facebook.com/" aria-label="Facebook">
                             <FaFacebook />
                         </a>
-                        <a href="#" aria-label="Instagram">
+                        <a href="https://www.instagram.com/" aria-label="Instagram">
                             <FaInstagram />
                         </a>
                     </div>
