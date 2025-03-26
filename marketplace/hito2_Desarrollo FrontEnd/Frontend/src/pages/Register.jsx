@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../assets/css/Register.css'; 
 import { Link } from "react-router-dom";
 import Footer from '../components/Footer';
+import registerImg from '../assets/img/Register/Sale_image.jpg';
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -26,7 +27,9 @@ const Register = () => {
   return (
     <div className="page-container">
       <div className="box">
-        <div className="imagen-izquierda"></div>
+        <div className="imagen-izquierda">
+          <img src={registerImg} alt="Promo registro" />
+        </div>
         <div className="registro">
           <div className="text-wrapper-2">REGISTRO</div>
           <input
@@ -77,7 +80,6 @@ const Register = () => {
           </p>
         </div>
       </div>
-      
     </div>
   );
 };

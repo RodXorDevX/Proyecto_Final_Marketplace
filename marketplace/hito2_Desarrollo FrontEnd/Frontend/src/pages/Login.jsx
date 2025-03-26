@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/Login.css";
-import loginImg from "../assets/img/LoginPic.jpg";
+import loginImg from "../assets/img/Register/LoginPic.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");

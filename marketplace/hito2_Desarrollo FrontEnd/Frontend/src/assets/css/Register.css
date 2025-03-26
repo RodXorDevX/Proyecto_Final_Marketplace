@@ -20,11 +20,15 @@
 .box .imagen-izquierda {
   width: 600px;
   height: 600px;
-  background-image: url('../img/Register/Sale_image.jpg');
-  background-size: cover;
-  background-position: center;
-  border-radius: 0.5rem;
   flex-shrink: 0;
+}
+
+.box .imagen-izquierda img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .box .registro {
