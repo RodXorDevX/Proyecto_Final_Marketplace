@@ -1,0 +1,79 @@
+.login-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #0a1c3d;
+    min-height: 100vh;
+    padding: 2rem 8rem;
+    gap: 8rem; /* Más espacio entre imagen y formulario */
+    color: white;
+  }
+  
+  /* Imagen 20% más grande */
+  .login-img img {
+    width: 600px;  /* antes 500px */
+    height: auto;
+    border-radius: 0.5rem;
+  }
+  
+  /* Formulario separado a la derecha */
+  .login-form {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-left: auto;
+  }
+  
+  .login-form h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .login-form input {
+    padding: 0.6rem 1rem;
+    border-radius: 1rem;
+    border: none;
+    font-size: 1rem;
+    width: 100%;
+  }
+  
+  .login-form button {
+    background-color: #f2c94c;
+    color: #0a1c3d;
+    font-weight: bold;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-form button:hover {
+    background-color: #e5b631;
+  }
+  
+  .registro-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: white;
+    margin-top: 0.5rem;
+  }
+  
+  .registro-link span {
+    color: #f2c94c;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
