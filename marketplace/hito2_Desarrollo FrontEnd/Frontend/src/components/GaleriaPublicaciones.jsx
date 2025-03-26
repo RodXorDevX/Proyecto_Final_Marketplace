@@ -25,15 +25,17 @@ function GaleriaPublicaciones() {
           <div className="control-cantidad">
             <button
               onClick={() => disminuirCantidad(item.id)}
-              disabled={!carrito.find((p) => p.id === item.id)}
-            >
-              -
-            </button>
+              disabled={!carrito.find((p) => p.id === item.id)}>Quitar</button>
             <span>{carrito.find((p) => p.id === item.id)?.cantidad || 0}</span>
-            <button onClick={() => agregarAlCarrito(item)}>+</button>
+            <button onClick={() => agregarAlCarrito(item)}>Agregar</button>
           </div>
 
-          <button onClick={() => navigate(`/publicacion/${item.id}`)}>Ver detalle</button>
+          <button 
+            className="detalle-button" 
+            onClick={() => navigate(`/publicacion/${item.id}`)}
+          >
+            Ver detalle
+          </button>
         </div>
       ))}
     </div>

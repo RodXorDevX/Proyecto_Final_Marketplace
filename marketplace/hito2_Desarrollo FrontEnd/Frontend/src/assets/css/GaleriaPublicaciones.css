@@ -13,6 +13,10 @@
     background: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .galeria-publicaciones .producto:hover {
@@ -27,18 +31,23 @@
 .galeria-publicaciones h4 {
     font-size: 1.1rem;
     margin: 0.5rem 0;
+    text-align: center;
 }
 
 .galeria-publicaciones p {
     font-size: 1rem;
     color: #333;
+    text-align: center;
 }
 
 .galeria-publicaciones .control-cantidad {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     margin-bottom: 0.5rem;
+    margin-top: auto;
 }
 
 .galeria-publicaciones button {
@@ -53,4 +62,10 @@
 
 .galeria-publicaciones button:hover {
     background-color: #0056b3;
+}
+
+.galeria-publicaciones .detalle-button {
+    width: 80%;
+    text-align: center;
+    margin-top: 0.5rem;
 } 

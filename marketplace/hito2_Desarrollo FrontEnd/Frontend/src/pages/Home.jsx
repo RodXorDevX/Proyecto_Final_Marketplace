@@ -38,6 +38,8 @@ function Home() {
                 <GaleriaPublicaciones />
             </div>
            
+                <Footer />
+           
         </div>
     );
 }
