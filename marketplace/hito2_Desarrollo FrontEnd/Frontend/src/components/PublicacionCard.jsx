@@ -1,4 +1,4 @@
-import './PublicacionCard.css';
+import '../assets/css/PublicacionCard.css';
 
 function PublicacionCard({ publicacion }) {
     return (
