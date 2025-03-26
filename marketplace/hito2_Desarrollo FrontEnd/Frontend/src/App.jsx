@@ -7,6 +7,7 @@ import Perfil from './pages/Perfil';
 import DetallePublicacion from './pages/DetallePublicacion';
 import Navbar from './components/Navbar';
 import RutaProtegida from './components/RutaProtegida';
+import Carrito from './pages/Carrito';
 
 function App() {
   return (
@@ -24,8 +25,15 @@ function App() {
         </RutaProtegida>
     }
   />
-        <Route path="/publicacion/:id" element={<DetallePublicacion />} />
-        
+      <Route path="/publicacion/:id" element={<DetallePublicacion />} />
+      <Route
+      path="/carrito"
+      element={
+      <RutaProtegida>
+      <Carrito />
+      </RutaProtegida>
+  }
+/>
         <Route
       path="/publicar"
       element={

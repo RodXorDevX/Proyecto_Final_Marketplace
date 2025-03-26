@@ -17,7 +17,7 @@ function Navbar() {
             <FaStar color="#151c33" />
           </div>
         </div>
-        <span className="text-0-1-4">TREND'S</span>
+        <Link to="/" className="text-0-1-4">TREND'S</Link>
       </div>
 
       <div className="nav-links">
@@ -42,14 +42,16 @@ function Navbar() {
           <div className="container-0-1-2">
             <FaUser color="#151c33" />
           </div>
-          <div className="container-0-1-3">
-            <FaShoppingCart />
-            {carrito && carrito.length > 0 && (
-              <span className="cart-total">
-                ${calcularTotal().toLocaleString("es-CL")}
-              </span>
-            )}
-          </div>
+          {usuario && (
+            <Link to="/carrito" className="container-0-1-3">
+              <FaShoppingCart color="#151c33" size={20} />
+              {carrito && carrito.length > 0 && (
+                <span className="cart-total">
+                  ${calcularTotal().toLocaleString("es-CL")}
+                </span>
+              )}
+            </Link>
+          )}
         </div>
       </div>
     </nav>

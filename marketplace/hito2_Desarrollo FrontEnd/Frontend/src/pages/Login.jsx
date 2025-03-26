@@ -36,7 +36,7 @@ const handleSubmit = (e) => {
       usuario: {
         id: 1,
         nombre: "Alejandra",
-        email: email,
+        email: "ale@example.com"
       },
     };
   
