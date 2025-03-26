@@ -1,4 +1,3 @@
-// src/pages/Carrito.jsx
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext";
 import SidebarPerfil from "../components/SidebarPerfil";
@@ -16,7 +15,7 @@ function Carrito() {
       <SidebarPerfil />
 
       <main style={{ flex: 1, background: "#d9d9d9", padding: "2rem", display: "flex", gap: "2rem" }}>
-        {/* Columna de productos */}
+    
         <div style={{ flex: 2 }}>
           <h2 style={{ marginBottom: "2rem" }}>CARRITO DE COMPRAS</h2>
           {carrito.length === 0 ? (
