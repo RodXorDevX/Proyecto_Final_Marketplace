@@ -1,9 +1,9 @@
 import GaleriaPublicaciones from "../components/GaleriaPublicaciones";
 import '../assets/css/Home.css';
 //import '../assets/css/SearchBar.css';
-import { FaSearch, FaTwitter, FaFacebook, FaInstagram, FaShoppingBag, FaUser } from 'react-icons/fa';
-import  Banner from "../components/Banner";
-import Footer from "../components/Footer";
+import { FaSearch, FaShoppingBag } from 'react-icons/fa';
+import Banner from "../components/Banner";
+
 function Home() {
     return (
         <div className="home-container">
@@ -37,9 +37,6 @@ function Home() {
                 <h2 className="publications-heading">Publicaciones destacadas</h2>
                 <GaleriaPublicaciones />
             </div>
-           
-                <Footer />
-           
         </div>
     );
 }
