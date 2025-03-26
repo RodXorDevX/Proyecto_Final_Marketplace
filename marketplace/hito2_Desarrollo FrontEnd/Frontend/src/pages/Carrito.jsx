@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext";
 import SidebarPerfil from "../components/SidebarPerfil";
-import "./Carrito.css";
+import "../assets/css/Carrito.css";
 
 function Carrito() {
   const {
