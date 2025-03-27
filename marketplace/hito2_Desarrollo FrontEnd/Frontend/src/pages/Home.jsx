@@ -1,4 +1,4 @@
-import GaleriaPublicaciones from "../components/GaleriaPublicaciones";
+import GaleriaDestacados from "../components/GaleriaDestacados";
 import '../assets/css/Home.css';
 //import '../assets/css/SearchBar.css';
 import { FaSearch, FaShoppingBag } from 'react-icons/fa';
@@ -35,7 +35,7 @@ function Home() {
 
                 {/* Publicaciones destacadas */}
                 <h2 className="publications-heading">Publicaciones destacadas</h2>
-                <GaleriaPublicaciones />
+                <GaleriaDestacados />
             </div>
         </div>
     );

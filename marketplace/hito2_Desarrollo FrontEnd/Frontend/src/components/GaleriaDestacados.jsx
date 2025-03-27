@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardProducto from "./CardProducto";
-import '../assets/css/GaleriaPublicaciones.css';
+import '../assets/css/GaleriaDestacados.css';
 
-function GaleriaPublicaciones() {
+function GaleriaDestacados() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function GaleriaPublicaciones() {
   }, []);
 
   return (
-    <div className="galeria-publicaciones">
+    <div className="galeria-destacados">
       {productos.slice(0, 6).map((item) => (
         <CardProducto key={item.id} producto={item} />
       ))}
@@ -21,5 +21,4 @@ function GaleriaPublicaciones() {
   );
 }
 
-export default GaleriaPublicaciones;
-
+export default GaleriaDestacados;
