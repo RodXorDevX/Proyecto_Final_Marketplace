@@ -4,7 +4,7 @@ import '../assets/css/Banner.css';
 // Importa las imágenes directamente
 import banner1 from '../assets/img/Fade_banner/Banner_1.png';
 import banner2 from '../assets/img/Fade_banner/Banner_2.jpg';
-import banner3 from '../assets/img/Fade_banner/Banner_3.jpg';
+import banner3 from '../assets/img/Fade_banner/Banner_3.png';
 
 function Banner() {
   return (
