@@ -10,6 +10,7 @@ import RutaProtegida from './components/RutaProtegida';
 import Carrito from './pages/Carrito';
 import Footer from './components/Footer';
 import Publicaciones from './pages/Publicaciones';
+import Pedidos from './pages/Pedidos';
 
 
 function App() {
@@ -46,6 +47,14 @@ function App() {
     }
   />
         <Route path="/publicaciones" element={<Publicaciones />} />
+        <Route
+          path="/pedidos"
+          element={
+            <RutaProtegida>
+              <Pedidos />
+            </RutaProtegida>
+          }
+        />
       </Routes>
       <Footer />
       
