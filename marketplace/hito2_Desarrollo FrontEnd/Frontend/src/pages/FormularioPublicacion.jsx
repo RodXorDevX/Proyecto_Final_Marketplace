@@ -14,7 +14,11 @@ const COLORES = [
   { nombre: "Rosa", valor: "#ffc0cb" },
   { nombre: "Verde", valor: "#008000" },
   { nombre: "Naranjo", valor: "#ffa500" },
-  { nombre: "Multicolor", valor: "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)" }
+  {
+    nombre: "Multicolor",
+    valor:
+      "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)",
+  },
 ];
 
 const TALLAS = ["S", "M", "L", "XL"];
@@ -22,16 +26,15 @@ const TALLAS = ["S", "M", "L", "XL"];
 function FormularioPublicacion() {
   const inputRef = useRef(null);
   const [imagenes, setImagenes] = useState([]);
-  const [categoria, setCategoria] = useState("");
 
   const [formData, setFormData] = useState({
     titulo: "",
     precio: "",
     categoria: "",
-    genero: "",
     tallas: [],
     colores: [],
     descripcion: "",
+    stock: 1,
   });
 
   const handleChange = (e) => {
@@ -78,6 +81,7 @@ function FormularioPublicacion() {
     e.preventDefault();
     const datosFinales = { ...formData, imagenes };
     console.log("Simulando envio de:", datosFinales);
+    // Aquí envías a tu backend
     // axios.post("http://localhost:3000/publicaciones", datosFinales)
     //   .then(() => alert("Publicación creada!"))
     //   .catch(err => alert("Error al publicar."));
@@ -91,7 +95,15 @@ function FormularioPublicacion() {
             {imagenes[0] ? (
               <>
                 <img src={imagenes[0]} alt="Principal" />
-                <button className="boton-eliminar" onClick={(e) => { e.stopPropagation(); eliminarImagen(0); }}>×</button>
+                <button
+                  className="boton-eliminar"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    eliminarImagen(0);
+                  }}
+                >
+                  ×
+                </button>
               </>
             ) : (
               <div className="texto-overlay">AÑADIR FOTOS</div>
@@ -103,53 +115,113 @@ function FormularioPublicacion() {
               <div key={index} className="miniatura-overlay">
                 <img src={src} alt={`Miniatura ${index + 1}`} />
                 <div className="numero-overlay">+{index + 1}</div>
-                <button className="boton-eliminar" onClick={(e) => { e.stopPropagation(); eliminarImagen(index + 1); }}>×</button>
+                <button
+                  className="boton-eliminar"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    eliminarImagen(index + 1);
+                  }}
+                >
+                  ×
+                </button>
               </div>
             ))}
           </div>
         </div>
 
         <p className="titulo-imagenes">Título imágenes</p>
-        <p className="texto-subida" onClick={abrirSelector}>Subir fotos (hasta 4)</p>
-        <input type="file" multiple accept="image/*" ref={inputRef} style={{ display: "none" }} onChange={handleImagenChange} />
+        <p className="texto-subida" onClick={abrirSelector}>
+          Subir fotos (hasta 4)
+        </p>
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          ref={inputRef}
+          style={{ display: "none" }}
+          onChange={handleImagenChange}
+        />
       </div>
 
       <div className="formulario-container">
         <h2>FORMULARIO DE PUBLICACIÓN</h2>
         <form onSubmit={handleSubmit}>
-          <input type="text" name="titulo" placeholder="TÍTULO" value={formData.titulo} onChange={handleChange} />
-          <input type="number" name="precio" placeholder="Precio" value={formData.precio} onChange={handleChange} />
+          <div className="grupo-input">
+            <label htmlFor="titulo">Título</label>
+            <input
+              type="text"
+              id="titulo"
+              name="titulo"
+              placeholder="Título del producto"
+              value={formData.titulo}
+              onChange={handleChange}
+            />
+          </div>
 
-          <label>Categoría</label>
-          <select name="categoria" value={categoria} onChange={(e) => { setCategoria(e.target.value); handleChange(e); }}>
-            <option value="">Selecciona categoría</option>
-            <option value="ropa">Ropa</option>
-            <option value="accesorios">Accesorios</option>
-          </select>
+          <div className="grupo-input">
+            <label htmlFor="precio">Precio</label>
+            <input
+              type="number"
+              id="precio"
+              name="precio"
+              placeholder="Precio"
+              value={formData.precio}
+              onChange={handleChange}
+            />
+          </div>
 
-          {categoria === "ropa" && (
-            <>
-              <label>Género</label>
-              <select name="genero" value={formData.genero} onChange={handleChange}>
-                <option value="">Selecciona género</option>
-                <option value="hombre">Hombre</option>
-                <option value="mujer">Mujer</option>
-                <option value="unisex">Unisex</option>
-              </select>
+          <div className="grupo-input">
+            <label htmlFor="stock">Cantidad de Productos</label>
+            <select
+              id="stock"
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
+            >
+              {[...Array(55).keys()].map((num) => (
+                <option key={num + 1} value={num + 1}>
+                  {num + 1}
+                </option>
+              ))}
+            </select>
+          </div>
 
+          <div className="grupo-input">
+            <label htmlFor="categoria">Categoría</label>
+            <select
+              id="categoria"
+              name="categoria"
+              value={formData.categoria}
+              onChange={handleChange}
+            >
+              <option value="">Selecciona categoría</option>
+              <option value="hombre">Ropa de Hombre</option>
+              <option value="mujer">Ropa de Mujer</option>
+              <option value="accesorios">Accesorios</option>
+              <option value="tecnologia">Tecnología</option>
+            </select>
+          </div>
+
+          {(formData.categoria === "hombre" || formData.categoria === "mujer") && (
+            <div className="grupo-input">
               <label>Tallas</label>
               <div className="tallas-checkboxes">
                 {TALLAS.map((talla) => (
                   <label key={talla}>
-                    <input type="checkbox" checked={formData.tallas.includes(talla)} onChange={() => handleTallaChange(talla)} /> {talla}
+                    <input
+                      type="checkbox"
+                      checked={formData.tallas.includes(talla)}
+                      onChange={() => handleTallaChange(talla)}
+                    />{" "}
+                    {talla}
                   </label>
                 ))}
               </div>
-            </>
+            </div>
           )}
 
-          {categoria && (
-            <>
+          {formData.categoria && (
+            <div className="grupo-input">
               <label>Colores</label>
               <div className="colores-selector">
                 {COLORES.map((color) => (
@@ -157,15 +229,29 @@ function FormularioPublicacion() {
                     key={color.nombre}
                     title={color.nombre}
                     onClick={() => handleColorChange(color.nombre)}
-                    className={`color-box ${formData.colores.includes(color.nombre) ? "seleccionado" : ""}`}
+                    className={`color-box ${
+                      formData.colores.includes(color.nombre)
+                        ? "seleccionado"
+                        : ""
+                    }`}
                     style={{ background: color.valor }}
                   />
                 ))}
               </div>
-            </>
+            </div>
           )}
 
-          <textarea name="descripcion" placeholder="Descripción" value={formData.descripcion} onChange={handleChange}></textarea>
+          <div className="grupo-input">
+            <label htmlFor="descripcion">Descripción</label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              placeholder="Descripción"
+              value={formData.descripcion}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+
           <button type="submit">PUBLICAR</button>
         </form>
       </div>
@@ -174,3 +260,4 @@ function FormularioPublicacion() {
 }
 
 export default FormularioPublicacion;
+

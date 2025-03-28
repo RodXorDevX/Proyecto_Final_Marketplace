@@ -203,3 +203,21 @@
     border: 2px solid #151c33; /* o el color que combine con tu diseño */
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
   }
+
+  .grupo-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .grupo-input label {
+    font-weight: bold;
+    color: #0a1c3d;
+  }
+  
+  .grupo-input input,
+  .grupo-input textarea,
+  .grupo-input select {
+    margin-top: 0;
+  }
+  
