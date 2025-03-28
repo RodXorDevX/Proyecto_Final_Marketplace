@@ -35,7 +35,7 @@ export default function Pedidos() {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="pedidos-container">
       <SidebarPerfil />
       <div className="pedidos-content">
         <h1>LISTADO DE PEDIDOS</h1>
