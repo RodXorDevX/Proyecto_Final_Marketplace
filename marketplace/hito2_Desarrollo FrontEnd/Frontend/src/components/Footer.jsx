@@ -5,11 +5,14 @@ function Footer() {
     return (
         <footer className="footer">
             <div className="footer-content">
+
                 <div className="copyright">
                     TREND'S 2025 
                 </div>
+
                 <div className="social-container">
                     <p>Encuentranos en:</p>
+                    
                     <div className="social-links">
                         <a href="https://x.com/" aria-label="Twitter">
                             <FaTwitter />
