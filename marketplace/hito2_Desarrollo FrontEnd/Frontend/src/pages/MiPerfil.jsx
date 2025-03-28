@@ -1,19 +1,16 @@
 import SidebarPerfil from "../components/SidebarPerfil";
 import PublicacionCard from "../components/PublicacionCard";
 import publicaciones from "../data/mockPublicaciones";
+import "../assets/css/MiPerfil.css";
 
-function Perfil() {
+function MiPerfil() {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="perfil-container">
       <SidebarPerfil />
-
-      <main style={{ flex: 1, background: "#d9d9d9", padding: "2rem" }}>
-        <h2 style={{ marginBottom: "2rem" }}>MIS PUBLICACIONES</h2>
-        <div style={{
-          display: "flex",
-          gap: "1rem",
-          flexWrap: "wrap"
-        }}>
+      
+      <main className="main-content">
+        <h2>MIS PUBLICACIONES</h2>
+        <div className="publicaciones-grid">
           {publicaciones.map((p) => (
             <PublicacionCard key={p.id} publicacion={p} />
           ))}
@@ -23,4 +20,4 @@ function Perfil() {
   );
 }
 
-export default Perfil;
+export default MiPerfil;
