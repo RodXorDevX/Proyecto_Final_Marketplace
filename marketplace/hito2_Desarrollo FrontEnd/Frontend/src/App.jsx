@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import RutaProtegida from './components/RutaProtegida';
 import Carrito from './pages/Carrito';
 import Footer from './components/Footer';
+import Publicaciones from './pages/Publicaciones';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
       </RutaProtegida>
     }
   />
+        <Route path="/publicaciones" element={<Publicaciones />} />
       </Routes>
       <Footer />
       

@@ -6,7 +6,7 @@ function Footer() {
         <footer className="footer">
             <div className="footer-content">
                 <div className="copyright">
-                    TREND'S 2025
+                    TREND'S 2025 
                 </div>
                 <div className="social-container">
                     <p>Encuentranos en:</p>
