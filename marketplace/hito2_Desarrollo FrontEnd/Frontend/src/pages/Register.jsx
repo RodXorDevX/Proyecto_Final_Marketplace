@@ -18,9 +18,29 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    try {
+      const response = await fetch('http://localhost:3000/registro', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form)
+      });
+
+      if (!response.ok) {
+        throw new Error('Error en el registro');
+      }
+
+      const data = await response.json();
+      console.log('Usuario registrado:', data);
+      // Redirigir al login después del registro exitoso
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al registrar usuario');
+    }
   };
 
   return (

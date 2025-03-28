@@ -10,20 +10,40 @@ function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    const datosFalsos = {
-      token: "falso-token-456",
-      usuario: {
-        id: 1,
-        nombre: "Alejandra",
-        email: "ale@example.com"
-      },
-    };
+      if (!response.ok) {
+        throw new Error('Credenciales inválidas');
+      }
 
-    login(datosFalsos);
-    navigate("/perfil");
+      const userData = await response.json();
+      
+      // Crear objeto con el formato esperado por el contexto
+      const datosUsuario = {
+        token: "token-generado", // En un sistema real, el backend debería proporcionar el token
+        usuario: {
+          id: userData.id,
+          nombre: userData.nombre,
+          email: userData.email
+        }
+      };
+
+      login(datosUsuario);
+      navigate("/perfil");
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error en el inicio de sesión');
+    }
   };
 
   return (
