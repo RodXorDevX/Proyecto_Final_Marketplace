@@ -1,9 +1,61 @@
 import "../assets/css/FormularioPublicacion.css";
 import React, { useRef, useState } from "react";
+import axios from "axios";
+
+const COLORES = [
+  { nombre: "Negro", valor: "#000000" },
+  { nombre: "Blanco", valor: "#ffffff" },
+  { nombre: "Rojo", valor: "#ff0000" },
+  { nombre: "Azul", valor: "#0000ff" },
+  { nombre: "Marrón", valor: "#8b4513" },
+  { nombre: "Amarillo", valor: "#ffff00" },
+  { nombre: "Dorado", valor: "#ffd700" },
+  { nombre: "Plateado", valor: "#c0c0c0" },
+  { nombre: "Rosa", valor: "#ffc0cb" },
+  { nombre: "Verde", valor: "#008000" },
+  { nombre: "Naranjo", valor: "#ffa500" },
+  { nombre: "Multicolor", valor: "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)" }
+];
+
+const TALLAS = ["S", "M", "L", "XL"];
 
 function FormularioPublicacion() {
   const inputRef = useRef(null);
   const [imagenes, setImagenes] = useState([]);
+  const [categoria, setCategoria] = useState("");
+
+  const [formData, setFormData] = useState({
+    titulo: "",
+    precio: "",
+    categoria: "",
+    genero: "",
+    tallas: [],
+    colores: [],
+    descripcion: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleTallaChange = (talla) => {
+    setFormData((prev) => {
+      const tallas = prev.tallas.includes(talla)
+        ? prev.tallas.filter((t) => t !== talla)
+        : [...prev.tallas, talla];
+      return { ...prev, tallas };
+    });
+  };
+
+  const handleColorChange = (color) => {
+    setFormData((prev) => {
+      const colores = prev.colores.includes(color)
+        ? prev.colores.filter((c) => c !== color)
+        : [...prev.colores, color];
+      return { ...prev, colores };
+    });
+  };
 
   const handleImagenChange = (e) => {
     const files = Array.from(e.target.files);
@@ -22,73 +74,98 @@ function FormularioPublicacion() {
     setImagenes((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const datosFinales = { ...formData, imagenes };
+    console.log("Simulando envio de:", datosFinales);
+    // axios.post("http://localhost:3000/publicaciones", datosFinales)
+    //   .then(() => alert("Publicación creada!"))
+    //   .catch(err => alert("Error al publicar."));
+  };
+
   return (
     <div className="formulario-publicacion-container">
       <div className="imagenes-publicacion">
         <div className="imagen-y-miniaturas">
-          {/* Imagen principal */}
           <div className="zona-principal" onClick={abrirSelector}>
             {imagenes[0] ? (
               <>
                 <img src={imagenes[0]} alt="Principal" />
-                <button
-                  className="boton-eliminar"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    eliminarImagen(0);
-                  }}
-                >
-                  ×
-                </button>
+                <button className="boton-eliminar" onClick={(e) => { e.stopPropagation(); eliminarImagen(0); }}>×</button>
               </>
             ) : (
               <div className="texto-overlay">AÑADIR FOTOS</div>
             )}
           </div>
 
-          {/* Miniaturas */}
           <div className="miniaturas-laterales">
             {imagenes.slice(1).map((src, index) => (
               <div key={index} className="miniatura-overlay">
                 <img src={src} alt={`Miniatura ${index + 1}`} />
                 <div className="numero-overlay">+{index + 1}</div>
-                <button
-                  className="boton-eliminar"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    eliminarImagen(index + 1);
-                  }}
-                >
-                  ×
-                </button>
+                <button className="boton-eliminar" onClick={(e) => { e.stopPropagation(); eliminarImagen(index + 1); }}>×</button>
               </div>
             ))}
           </div>
         </div>
 
         <p className="titulo-imagenes">Título imágenes</p>
-        <p className="texto-subida" onClick={abrirSelector}>
-          Subir fotos (hasta 4)
-        </p>
-
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          ref={inputRef}
-          style={{ display: "none" }}
-          onChange={handleImagenChange}
-        />
+        <p className="texto-subida" onClick={abrirSelector}>Subir fotos (hasta 4)</p>
+        <input type="file" multiple accept="image/*" ref={inputRef} style={{ display: "none" }} onChange={handleImagenChange} />
       </div>
 
-      {/* Formulario */}
       <div className="formulario-container">
         <h2>FORMULARIO DE PUBLICACIÓN</h2>
-        <form>
-          <input type="text" placeholder="TÍTULO" />
-          <input type="number" placeholder="Precio" />
-          <input type="text" placeholder="Categoría" />
-          <textarea placeholder="Descripción"></textarea>
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="titulo" placeholder="TÍTULO" value={formData.titulo} onChange={handleChange} />
+          <input type="number" name="precio" placeholder="Precio" value={formData.precio} onChange={handleChange} />
+
+          <label>Categoría</label>
+          <select name="categoria" value={categoria} onChange={(e) => { setCategoria(e.target.value); handleChange(e); }}>
+            <option value="">Selecciona categoría</option>
+            <option value="ropa">Ropa</option>
+            <option value="accesorios">Accesorios</option>
+          </select>
+
+          {categoria === "ropa" && (
+            <>
+              <label>Género</label>
+              <select name="genero" value={formData.genero} onChange={handleChange}>
+                <option value="">Selecciona género</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="unisex">Unisex</option>
+              </select>
+
+              <label>Tallas</label>
+              <div className="tallas-checkboxes">
+                {TALLAS.map((talla) => (
+                  <label key={talla}>
+                    <input type="checkbox" checked={formData.tallas.includes(talla)} onChange={() => handleTallaChange(talla)} /> {talla}
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
+
+          {categoria && (
+            <>
+              <label>Colores</label>
+              <div className="colores-selector">
+                {COLORES.map((color) => (
+                  <div
+                    key={color.nombre}
+                    title={color.nombre}
+                    onClick={() => handleColorChange(color.nombre)}
+                    className={`color-box ${formData.colores.includes(color.nombre) ? "seleccionado" : ""}`}
+                    style={{ background: color.valor }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          <textarea name="descripcion" placeholder="Descripción" value={formData.descripcion} onChange={handleChange}></textarea>
           <button type="submit">PUBLICAR</button>
         </form>
       </div>

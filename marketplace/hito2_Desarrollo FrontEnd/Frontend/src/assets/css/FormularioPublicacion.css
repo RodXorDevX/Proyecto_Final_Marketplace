@@ -181,4 +181,25 @@
     width: 100%;
     margin-top: 0.5rem;
   }
-  git push origin main
+
+
+  .colores-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .color-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .color-box.seleccionado {
+    border: 2px solid #151c33; /* o el color que combine con tu diseño */
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  }
