@@ -6,9 +6,16 @@ import {
 } from "react-icons/fa";
 import Banner from "../components/Banner";
 import { useState } from "react";
+import GaleriaPublicaciones from "../components/GaleriaPublicaciones";
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleGaleriaClick = () => {
+    navigate('/publicaciones');
+  };
 
   return (
     <div className="home-container">
@@ -18,7 +25,7 @@ function Home() {
 
         {/* Sección de Búsqueda y Galería */}
         <div className="search-section">
-          <div>
+          <div onClick={handleGaleriaClick} style={{ cursor: 'pointer' }}>
             <div className="gallery-icon">
               <FaShoppingBag color="white" size={60} />
             </div>
