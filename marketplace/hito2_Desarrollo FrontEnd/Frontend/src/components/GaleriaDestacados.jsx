@@ -3,7 +3,7 @@ import axios from "axios";
 import CardProducto from "./CardProducto";
 import '../assets/css/GaleriaDestacados.css';
 
-function GaleriaDestacados() {
+function GaleriaDestacados({ search }) {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
@@ -12,9 +12,15 @@ function GaleriaDestacados() {
       .catch((err) => console.error("Error al obtener productos", err));
   }, []);
 
+  const productosFiltrados = productos
+    .filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase())
+    )
+    .slice(0, 4);
+
   return (
     <div className="galeria-destacados">
-      {productos.slice(0, 6).map((item) => (
+      {productosFiltrados.map((item) => (
         <CardProducto key={item.id} producto={item} />
       ))}
     </div>
