@@ -1,6 +1,13 @@
+.galeria-container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+}
+
 .galeria-publicaciones {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    justify-content: center;
+    justify-content: flex-start;
+    flex: 1;
 }

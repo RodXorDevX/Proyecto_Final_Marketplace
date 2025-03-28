@@ -7,7 +7,7 @@ function Footer() {
             <div className="footer-content">
 
                 <div className="copyright">
-                    TREND'S 2025
+                    TREND'S 2025 
                 </div>
 
                 <div className="social-container">
