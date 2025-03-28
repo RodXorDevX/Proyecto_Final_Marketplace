@@ -1,15 +1,23 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CarritoContext } from "../context/CarritoContext";
 import SidebarPerfil from "../components/SidebarPerfil";
 import "../assets/css/Carrito.css";
 
 function Carrito() {
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const {
     carrito,
     agregarAlCarrito,
     disminuirCantidad,
     calcularTotal,
   } = useContext(CarritoContext);
+
+  const handlePagar = () => {
+    setShowSuccessMessage(true);
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000); // El mensaje desaparecerá después de 3 segundos
+  };
 
   return (
     <div className="carrito-container">
@@ -64,7 +72,12 @@ function Carrito() {
           </ul>
           <hr />
           <p><strong>TOTAL:</strong> {calcularTotal().toLocaleString("es-CL")}</p>
-          <button>PAGAR</button>
+          <button onClick={handlePagar}>PAGAR</button>
+          {showSuccessMessage && (
+            <div className="success-message">
+              ¡Compra realizada con éxito!
+            </div>
+          )}
         </div>
       </main>
     </div>
