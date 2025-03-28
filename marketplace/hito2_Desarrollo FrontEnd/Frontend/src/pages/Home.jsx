@@ -1,16 +1,10 @@
-import GaleriaPublicaciones from "../components/GaleriaPublicaciones";
+import GaleriaDestacados from "../components/GaleriaDestacados";
 import "../assets/css/Home.css";
-//import '../assets/css/SearchBar.css';
 import {
   FaSearch,
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
   FaShoppingBag,
-  FaUser,
 } from "react-icons/fa";
 import Banner from "../components/Banner";
-import Footer from "../components/Footer";
 import { useState } from "react";
 
 function Home() {
@@ -48,7 +42,7 @@ function Home() {
 
         {/* Publicaciones destacadas */}
         <h2 className="publications-heading">Publicaciones destacadas</h2>
-        <GaleriaPublicaciones search={search} />
+        <GaleriaDestacados search={search} />
       </div>
     </div>
   );

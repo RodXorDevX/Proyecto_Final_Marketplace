@@ -3,9 +3,10 @@
     color: white;
     padding: 20px 40px;
     width: 100%;
-    position: relative;
+    position: fixed;
     bottom: 0;
     left: 0;
+    z-index: 1000;
 }
 
 .footer-content {
@@ -14,18 +15,22 @@
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 40px;
 }
 
 .copyright {
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
+    margin-right: auto;
 }
 
 .social-container {
     display: flex;
-    align-items: center;
+    align-items: left;
+    justify-content: left;
     gap: 20px;
+    margin-left: auto;
 }
 
 .social-container p {
@@ -47,4 +52,9 @@
 
 .social-links a:hover {
     color: #ffc107;
+}
+
+/* Añadir padding-bottom al contenido principal para evitar que el footer lo tape */
+.page-container, .login-container, .home-container {
+    padding-bottom: 80px;
 }

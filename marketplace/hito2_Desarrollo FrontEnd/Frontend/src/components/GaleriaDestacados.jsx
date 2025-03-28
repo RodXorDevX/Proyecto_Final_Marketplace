@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardProducto from "./CardProducto";
-import "../assets/css/GaleriaPublicaciones.css";
+import '../assets/css/GaleriaDestacados.css';
 
-function GaleriaPublicaciones({ search }) {
+function GaleriaDestacados({ search }) {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products")
+    axios.get("https://fakestoreapi.com/products")
       .then((res) => setProductos(res.data))
       .catch((err) => console.error("Error al obtener productos", err));
   }, []);
@@ -20,7 +19,7 @@ function GaleriaPublicaciones({ search }) {
     .slice(0, 4);
 
   return (
-    <div className="galeria-publicaciones">
+    <div className="galeria-destacados">
       {productosFiltrados.map((item) => (
         <CardProducto key={item.id} producto={item} />
       ))}
@@ -28,4 +27,4 @@ function GaleriaPublicaciones({ search }) {
   );
 }
 
-export default GaleriaPublicaciones;
+export default GaleriaDestacados;
