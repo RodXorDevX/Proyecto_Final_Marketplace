@@ -7,20 +7,28 @@ export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
   const agregarAlCarrito = (producto) => {
-    const productoExistente = carrito.find((item) => item.id === producto.id);
+    const productoExistente = carrito.find((item) =>
+      item.id === producto.id &&
+      item.talla === producto.talla
+    );
   
     if (productoExistente) {
       setCarrito(
         carrito.map((item) =>
-          item.id === producto.id
-            ? { ...item, cantidad: item.cantidad + 1 }
+          item.id === producto.id && item.talla === producto.talla
+            ? { ...item, cantidad: item.cantidad + (producto.cantidad || 1) }
             : item
         )
       );
     } else {
-      setCarrito([...carrito, { ...producto, cantidad: 1 }]);
+      setCarrito([
+        ...carrito,
+        { ...producto, cantidad: producto.cantidad || 1 }
+      ]);
     }
   };
+  
+  
 
   const disminuirCantidad = (productoId) => {
     setCarrito(

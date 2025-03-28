@@ -16,7 +16,7 @@ function Carrito() {
     setShowSuccessMessage(true);
     setTimeout(() => {
       setShowSuccessMessage(false);
-    }, 3000); // El mensaje desaparecerá después de 3 segundos
+    }, 3000);
   };
 
   return (
@@ -24,7 +24,6 @@ function Carrito() {
       <SidebarPerfil />
 
       <main className="carrito-main">
-        {/* Columna de productos */}
         <div className="carrito-productos">
           <h2>CARRITO DE COMPRAS</h2>
           {carrito.length === 0 ? (
@@ -32,16 +31,12 @@ function Carrito() {
           ) : (
             carrito.map((item) => (
               <div key={item.id} className="carrito-item">
-                <img
-                  src={item.image || item.imagen}
-                  alt={item.title}
-                />
+                <img src={item.image || item.imagen} alt={item.title} />
                 <div className="carrito-item-info">
                   <h4>{item.title || item.titulo}</h4>
-                  <p>TALLA S - BLANCA</p>
+                  <p>TALLA {item.talla || "S"} - {item.color || "BLANCO"}</p>
                 </div>
 
-                {/* Botones + - */}
                 <div className="carrito-cantidad">
                   <button onClick={() => disminuirCantidad(item.id)}>-</button>
                   <span>{item.cantidad}</span>
@@ -59,7 +54,6 @@ function Carrito() {
           )}
         </div>
 
-        {/* Columna resumen */}
         <div className="carrito-resumen">
           <h3>RESUMEN</h3>
           <ul>
