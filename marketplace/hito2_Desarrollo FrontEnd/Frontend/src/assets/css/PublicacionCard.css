@@ -35,6 +35,19 @@
     margin-bottom: 1rem;
 }
 
+.card-content .precio {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #072d57;
+    margin-bottom: 0.5rem;
+}
+
+.card-content .stock {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
 .card-actions {
     display: flex;
     justify-content: space-between;
