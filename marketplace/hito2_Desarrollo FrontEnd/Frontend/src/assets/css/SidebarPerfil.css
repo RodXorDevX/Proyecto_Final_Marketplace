@@ -1,9 +1,11 @@
 .sidebar {
     width: 250px;
+    min-height: calc(100vh - 60px); 
+    height: auto;
     background-color: #999999;
     color: white;
     padding: 2rem 1.5rem;
-    height: calc(100vh - 60px); /* Ajustar según el alto del navbar */
+    
 }
 
 .profile-section {
