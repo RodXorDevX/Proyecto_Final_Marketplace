@@ -2,43 +2,74 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
+<<<<<<< HEAD
 import '../assets/css/GaleriaPublicaciones.css';
 function GaleriaPublicaciones() {
+=======
+
+function GaleriaPublicaciones({ search }) {
+>>>>>>> 0045175 (Barra search funcionando)
   const [productos, setProductos] = useState([]);
   const navigate = useNavigate();
-  const { agregarAlCarrito, disminuirCantidad, carrito } = useContext(CarritoContext);
+  const { agregarAlCarrito, disminuirCantidad, carrito } =
+    useContext(CarritoContext);
 
   useEffect(() => {
-    axios.get("https://fakestoreapi.com/products")
+    axios
+      .get("https://fakestoreapi.com/products")
       .then((res) => setProductos(res.data))
       .catch((err) => console.error("Error al obtener productos", err));
   }, []);
 
   return (
-    <div className="galeria-publicaciones">
-      {productos.slice(0, 6).map((item) => (
-        <div key={item.id} className="producto">
-          <img src={item.image} alt={item.title} />
-          <h4>{item.title}</h4>
-          <p>${item.price}</p>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+      {productos
+        .filter((item) =>
+          item.title.toLowerCase().includes(search.toLowerCase())
+        )
+        .slice(0, 4)
+        .map((item) => (
+          <div
+            key={item.id}
+            style={{
+              border: "1px solid #ccc",
+              padding: "1rem",
+              width: "200px",
+            }}
+          >
+            <img src={item.image} alt={item.title} style={{ width: "100%" }} />
+            <h4>{item.title}</h4>
+            <p>${item.price}</p>
 
-          <div className="control-cantidad">
-            <button
-              onClick={() => disminuirCantidad(item.id)}
-              disabled={!carrito.find((p) => p.id === item.id)}
+            {/* Control de cantidad */}
+            <div
+              style={{
+                display: "flex",
+                gap: "0.5rem",
+                alignItems: "center",
+                marginBottom: "0.5rem",
+              }}
+>>>>>>> 0045175 (Barra search funcionando)
             >
-              -
-            </button>
-            <span>{carrito.find((p) => p.id === item.id)?.cantidad || 0}</span>
-            <button onClick={() => agregarAlCarrito(item)}>+</button>
-          </div>
+              <button
+                onClick={() => disminuirCantidad(item.id)}
+                disabled={!carrito.find((p) => p.id === item.id)}
+              >
+                -
+              </button>
+              <span>
+                {carrito.find((p) => p.id === item.id)?.cantidad || 0}
+              </span>
+              <button onClick={() => agregarAlCarrito(item)}>+</button>
+            </div>
 
-          <button onClick={() => navigate(`/publicacion/${item.id}`)}>Ver detalle</button>
-        </div>
-      ))}
+            <button onClick={() => navigate(`/publicacion/${item.id}`)}>
+              Ver detalle
+            </button>
+          </div>
+        ))}
     </div>
   );
 }
 
 export default GaleriaPublicaciones;
-
