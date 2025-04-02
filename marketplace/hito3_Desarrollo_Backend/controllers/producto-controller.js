@@ -36,14 +36,16 @@ const getProductosFiltrados = async (req, res) => {
 // Crear un nuevo producto
 const createProducto = async (req, res) => {
     try {
-        const productoData = req.body;
-        const nuevoProducto = await productoModel.createProducto(productoData);
-        res.status(201).json(nuevoProducto);
+      console.log("🟨 Datos recibidos en el backend:", req.body); // 👈 agrega esto
+  
+      const productoData = req.body;
+      const nuevoProducto = await productoModel.createProducto(productoData);
+      res.status(201).json(nuevoProducto);
     } catch (error) {
-        console.error('Error creando el producto:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
+      console.error("🔥 Error creando el producto:", error); // 👈 imprime el error
+      res.status(500).json({ error: "Error en el servidor" });
     }
-};
+  };
 
 module.exports = {
     getProductos,

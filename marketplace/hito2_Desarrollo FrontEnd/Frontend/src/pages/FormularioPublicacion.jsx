@@ -79,13 +79,41 @@ function FormularioPublicacion() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const datosFinales = { ...formData, imagenes };
-    console.log("Simulando envio de:", datosFinales);
-    // Aquí envías a tu backend
-    // axios.post("http://localhost:3000/publicaciones", datosFinales)
-    //   .then(() => alert("Publicación creada!"))
-    //   .catch(err => alert("Error al publicar."));
+  
+    const token = localStorage.getItem("token"); 
+    const userId = localStorage.getItem("userId"); 
+  
+    const mapCategoria = {
+      hombre: 1,
+      mujer: 2,
+      accesorios: 3,
+      tecnologia: 4,
+    };
+  
+    const productoFinal = {
+      titulo: formData.titulo,
+      descripcion: formData.descripcion,
+      precio: parseFloat(formData.precio),
+      categoria_id: mapCategoria[formData.categoria],
+      size: formData.tallas.join(","),
+      stock: parseInt(formData.stock),
+      imagen: imagenes[0] || null,
+      vendedor_id: parseInt(userId), // ✅ aquí usas el ID real
+    };
+  
+    axios
+      .post("http://localhost:3000/productos", productoFinal, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => alert("¡Publicación creada!"))
+      .catch((err) => {
+        console.error(err);
+        alert("Error al publicar.");
+      });
   };
+
 
   return (
     <div className="formulario-publicacion-container">
