@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require('../config/db-config');
 
 // Obtener todas las categorías
 const getCategorias = async () => {

@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require('../config/db-config');
 const format = require('pg-format');
 
 // Función para obtener productos con paginación y ordenamiento
