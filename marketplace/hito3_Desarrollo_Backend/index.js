@@ -3,14 +3,14 @@ const express = require('express');
 const cors = require('cors');
 
 // Importación de middleware
-const logRequest = require('./middlewares/logger');
+const logRequest = require('./middlewares/logger-middleware');
 
 // Importación de rutas
-const productosRoutes = require('./routes/productos');
-const usuariosRoutes = require('./routes/usuarios');
-const carritosRoutes = require('./routes/carritos');
-const categoriasRoutes = require('./routes/categorias');
-const tipoUsuarioRoutes = require('./routes/tipoUsuario');
+const productosRoutes = require('./routes/producto-routes');
+const usuariosRoutes = require('./routes/usuario-routes');
+const carritosRoutes = require('./routes/carrito-routes');
+const categoriasRoutes = require('./routes/categoria-routes');
+const tipoUsuarioRoutes = require('./routes/tipo-usuario-routes');
 
 // Configuración inicial de Express
 const app = express();

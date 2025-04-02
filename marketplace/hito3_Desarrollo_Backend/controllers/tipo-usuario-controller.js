@@ -1,4 +1,4 @@
-const tipoUsuarioModel = require('../models/tipoUsuario');
+const tipoUsuarioModel = require('../models/tipo-Usuario-model');
 
 // Obtener todos los tipos de usuario
 const getTiposUsuario = async (req, res) => {

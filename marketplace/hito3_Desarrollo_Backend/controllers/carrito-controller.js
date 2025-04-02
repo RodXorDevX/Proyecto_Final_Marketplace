@@ -1,6 +1,6 @@
-const carritoModel = require('../models/carrito');
-const usuarioModel = require('../models/usuario');
-const productoModel = require('../models/producto');
+const carritoModel = require('../models/carrito-model');
+const usuarioModel = require('../models/usuario-model');
+const productoModel = require('../models/producto-model');
 
 // Agregar producto al carrito
 const addProductoToCarrito = async (req, res) => {

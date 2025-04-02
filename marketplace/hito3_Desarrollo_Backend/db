@@ -1,77 +1,4 @@
 CREATE TABLE tipo_usuario (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL
-);
-
-
-CREATE TABLE usuarios (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    picture TEXT,
-    nombre VARCHAR(100),
-    direccion TEXT,
-    tipo_usuario_id INT,
-    FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuario(id)
-);
-
-
-CREATE TABLE categorias (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL
-);
-
-
-CREATE TABLE productos (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    titulo VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    precio DECIMAL(10,2) NOT NULL,
-    categoria_id INT,
-    size VARCHAR(10),
-    stock INT DEFAULT 0,
-    imagen TEXT,
-    vendedor_id INT,
-    FOREIGN KEY (categoria_id) REFERENCES categorias(id),
-    FOREIGN KEY (vendedor_id) REFERENCES usuarios(id)
-);
-
-
-CREATE TABLE carritos (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-
-
-CREATE TABLE carrito_items (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    carrito_id INT,
-    producto_id INT,
-    cantidad INT NOT NULL,
-    FOREIGN KEY (carrito_id) REFERENCES carritos(id),
-    FOREIGN KEY (producto_id) REFERENCES productos(id)
-);
-
-CREATE TABLE pedidos (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id INT,
-    total DECIMAL(10,2),
-    status VARCHAR(50),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-CREATE TABLE pedido_items (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    pedido_id INT,
-    producto_id INT,
-    cantidad INT NOT NULL,
-    precio_unitario DECIMAL(10,2),
-    size VARCHAR(10),
-    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
-    FOREIGN KEY (producto_id) REFERENCES productos(id)
-);
-CREATE TABLE tipo_usuario (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
@@ -129,6 +56,7 @@ CREATE TABLE pedidos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+
 CREATE TABLE pedido_items (
     id SERIAL PRIMARY KEY,
     pedido_id INT,

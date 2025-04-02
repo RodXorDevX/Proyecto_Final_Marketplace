@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const productoController = require('../controllers/productoController');
+const productoController = require('../controllers/producto-controller');
 
 // Ruta GET /productos con paginación y ordenamiento
 router.get('/', productoController.getProductos);

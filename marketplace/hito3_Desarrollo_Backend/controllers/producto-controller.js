@@ -1,5 +1,5 @@
-const productoModel = require('../models/producto');
-const { getProductosHATEOAS } = require('../utils/hateoas');
+const productoModel = require('../models/producto-model');
+const { getProductosHATEOAS } = require('../utils/hateoas-util');
 
 // Obtener productos con paginación y ordenamiento
 const getProductos = async (req, res) => {
