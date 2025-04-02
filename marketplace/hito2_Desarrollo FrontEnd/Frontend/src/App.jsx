@@ -11,13 +11,11 @@ import Carrito from './pages/Carrito';
 import Footer from './components/Footer';
 import Publicaciones from './pages/Publicaciones';
 import Pedidos from './pages/Pedidos';
-import { useEffect } from 'react';
+
 
 function App() {
 
-  useEffect(() => {
-    alert("Para Iniciar sesión entra con cualquier mail y contraseña");
-  }, []);
+
 
   return (
     <>

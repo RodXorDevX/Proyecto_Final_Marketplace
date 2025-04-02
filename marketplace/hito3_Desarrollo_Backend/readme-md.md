@@ -13,7 +13,7 @@ hito3_backend/
 │   ├── routes/           # Definición de rutas
 │   ├── tests/            # Tests unitarios e integración
 │   ├── utils/            # Utilidades y funciones auxiliares
-│   ├── app.js            # Archivo principal de la aplicación
+│   ├── index.js            # Archivo principal de la aplicación
 │   ├── package.json      # Dependencias del proyecto
 │   └── README.md         # Documentación
 ```

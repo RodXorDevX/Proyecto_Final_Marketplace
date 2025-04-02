@@ -21,7 +21,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/registro', {
+      const response = await fetch('http://localhost:3000/usuarios/registro', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
