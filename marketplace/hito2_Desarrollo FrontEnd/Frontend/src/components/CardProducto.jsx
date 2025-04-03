@@ -7,18 +7,14 @@ function CardProducto({ producto }) {
   const navigate = useNavigate();
   const { agregarAlCarrito, disminuirCantidad, carrito } = useContext(CarritoContext);
 
-  // Adaptar campos para que funcionen con productos de FakeStore o de tu backend
-  const id = producto.id;
-  const titulo = producto.title || producto.titulo || "Producto sin título";
-  const precio = producto.price || producto.precio || 0;
-  const imagen = producto.image || producto.imagen || "https://via.placeholder.com/150";
+  const { id, titulo, precio, imagen } = producto;
 
   const cantidad = carrito.find((p) => p.id === id)?.cantidad || 0;
 
   return (
     <div className="producto">
       <div className="imagen-container">
-        <img src={imagen} alt={titulo} />
+        <img src={imagen || "https://via.placeholder.com/150"} alt={titulo} />
       </div>
       
       <h4>{titulo}</h4>
@@ -34,7 +30,7 @@ function CardProducto({ producto }) {
             Quitar
           </button>
           <span>{cantidad}</span>
-          <button onClick={() => agregarAlCarrito({ ...producto, id, titulo, precio, imagen })}>
+          <button onClick={() => agregarAlCarrito(producto)}>
             Agregar
           </button>
         </div>
