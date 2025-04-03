@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import '../assets/css/Register.css'; 
 import { Link } from "react-router-dom";
 import registerImg from '../assets/img/Register/Sale_image.jpg';
+import { useState } from 'react';
 
 const Register = () => {
   const [form, setForm] = useState({
