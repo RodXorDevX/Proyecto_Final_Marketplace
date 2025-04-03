@@ -1,6 +1,8 @@
 import "../assets/css/FormularioPublicacion.css";
 import axios from "axios";
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const COLORES = [
   { nombre: "Negro", valor: "#000000" },
@@ -107,12 +109,14 @@ function FormularioPublicacion() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(() => alert("¡Publicación creada!"))
-      .catch((err) => {
-        console.error(err);
-        alert("Error al publicar.");
-      });
+      .then(() => {
+        alert("¡Publicación creada!");
+        navigate("/perfil"); // ajusta la ruta si tu perfil tiene otro path
+      })
   };
+
+  const navigate = useNavigate();
+
 
 
   return (

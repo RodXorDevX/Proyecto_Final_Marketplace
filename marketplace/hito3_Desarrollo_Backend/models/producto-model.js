@@ -82,9 +82,16 @@ const createProducto = async (productoData) => {
     return result.rows[0];
 };
 
+const getProductoPorId = async (id) => {
+    const query = format('SELECT * FROM productos WHERE id = %L', id);
+    const result = await pool.query(query);
+    return result.rows[0]; // Puede ser undefined si no existe
+  };
+
 module.exports = {
     getProductos,
     getProductosFiltrados,
-    createProducto
+    createProducto,
+    getProductoPorId
 };
 // --- END OF FILE producto-model.js ---

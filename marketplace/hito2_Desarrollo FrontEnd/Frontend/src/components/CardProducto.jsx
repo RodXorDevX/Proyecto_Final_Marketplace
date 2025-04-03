@@ -6,23 +6,27 @@ import '../assets/css/CardProducto.css';
 function CardProducto({ producto }) {
   const navigate = useNavigate();
   const { agregarAlCarrito, disminuirCantidad, carrito } = useContext(CarritoContext);
-  const cantidad = carrito.find((p) => p.id === producto.id)?.cantidad || 0;
+
+  const { id, titulo, precio, imagen } = producto;
+
+  const cantidad = carrito.find((p) => p.id === id)?.cantidad || 0;
 
   return (
     <div className="producto">
       <div className="imagen-container">
-        <img src={producto.image} alt={producto.title} />
+        <img src={imagen || "https://via.placeholder.com/150"} alt={titulo} />
       </div>
       
-      <h4>{producto.title}</h4>
+      <h4>{titulo}</h4>
       
       <div className="acciones">
-        <p>${producto.price}</p>
+        <p>${precio}</p>
 
         <div className="control-cantidad">
           <button
-            onClick={() => disminuirCantidad(producto.id)}
-            disabled={cantidad === 0}>
+            onClick={() => disminuirCantidad(id)}
+            disabled={cantidad === 0}
+          >
             Quitar
           </button>
           <span>{cantidad}</span>
@@ -33,7 +37,7 @@ function CardProducto({ producto }) {
 
         <button 
           className="detalle-button" 
-          onClick={() => navigate(`/publicacion/${producto.id}`)}
+          onClick={() => navigate(`/publicacion/${id}`)}
         >
           Ver detalle
         </button>
