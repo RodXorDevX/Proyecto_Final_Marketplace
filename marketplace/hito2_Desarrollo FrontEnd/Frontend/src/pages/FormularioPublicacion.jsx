@@ -1,6 +1,6 @@
 import "../assets/css/FormularioPublicacion.css";
-import React, { useRef, useState } from "react";
 import axios from "axios";
+import { useState, useRef } from "react";
 
 const COLORES = [
   { nombre: "Negro", valor: "#000000" },
