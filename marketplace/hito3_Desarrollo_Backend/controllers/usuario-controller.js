@@ -33,7 +33,10 @@ const loginUsuario = async (req, res) => {
             return res.status(401).json({ error: 'Credenciales inválidas' });
         }
         
-        res.json(usuario);
+        return res.json({
+            token: usuario.token,  // El token generado
+            usuario: usuario.user   // El usuario autenticado
+        });
     } catch (error) {
         console.error('Error en el login:', error);
         res.status(500).json({ error: 'Error en el servidor' });
