@@ -6,28 +6,45 @@ import "../assets/css/GaleriaPublicaciones.css";
 
 function GaleriaPublicaciones({ search }) {
   const [productos, setProductos] = useState([]);
-  const [categoriaActual, setCategoriaActual] = useState('all');
+  const [categoriaActual, setCategoriaActual] = useState("all");
+
+  const mapCategoriaIdToNombre = {
+    1: "hombre",
+    2: "mujer",
+    3: "accesorios",
+    4: "tecnologia"
+  };
 
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((res) => setProductos(res.data))
-      .catch((err) => console.error("Error al obtener productos", err));
+    const fetchProductos = async () => {
+      try {
+        const backendRes = await axios.get("http://localhost:3000/productos");
+        const productosBackend = backendRes.data.data || backendRes.data;
+        setProductos(productosBackend);
+      } catch (err) {
+        console.error("Error al obtener productos", err);
+      }
+    };
+  
+    fetchProductos();
   }, []);
-
-  const productosFiltrados = productos
-    .filter((item) => {
-      const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = categoriaActual === 'all' || item.category === categoriaActual;
-      return matchesSearch && matchesCategory;
-    });
+  
+  const productosFiltrados = productos.filter((item) => {
+    const titulo = item.titulo || "";
+    const categoriaTexto = mapCategoriaIdToNombre[item.categoria_id] || "";
+    const matchesSearch = titulo.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      categoriaActual === "all" || categoriaTexto === categoriaActual;
+  
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="galeria-container">
       <MenuCategorias onSelectCategory={setCategoriaActual} />
       <div className="galeria-publicaciones">
-        {productosFiltrados.map((item) => (
-          <CardProducto key={item.id} producto={item} />
+        {productosFiltrados.map((item, index) => (
+         <CardProducto key={item.id || index} producto={item} />
         ))}
       </div>
     </div>

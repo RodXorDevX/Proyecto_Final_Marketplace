@@ -71,9 +71,24 @@ const createProducto = async (req, res) => {
     }
   };
 
+  const getProductoPorId = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const producto = await productoModel.getProductoPorId(id);
+      if (!producto) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+      res.json(producto);
+    } catch (error) {
+      console.error('Error obteniendo el producto:', error);
+      res.status(500).json({ error: 'Error en el servidor' });
+    }
+  };
+
 module.exports = {
     getProductos,
     getProductosFiltrados,
-    createProducto
+    createProducto,
+    getProductoPorId
 };
 // --- END OF FILE producto-controller.js ---
