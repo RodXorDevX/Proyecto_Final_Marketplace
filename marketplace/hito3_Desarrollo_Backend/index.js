@@ -1,6 +1,8 @@
 // Importación de dependencias
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+
 
 // Importación de middleware
 const logRequest = require('./middlewares/logger-middleware');
@@ -15,6 +17,13 @@ const tipoUsuarioRoutes = require('./routes/tipo-usuario-routes');
 // Configuración inicial de Express
 const app = express();
 const PORT = 3000;
+
+//JWS
+const secretKey = process.env.JWT_SECRET;
+if (!secretKey) {
+    console.error("ERROR: La variable de entorno JWT_SECRET no está definida.");
+    process.exit(1); // Detiene la ejecución si no hay clave JWT
+}
 
 // Middlewares
 app.use(cors()); // Habilita CORS para todas las rutas
