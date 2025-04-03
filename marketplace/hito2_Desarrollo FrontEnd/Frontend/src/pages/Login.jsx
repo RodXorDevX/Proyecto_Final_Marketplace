@@ -30,15 +30,16 @@ function Login() {
       
       // Crear objeto con el formato esperado por el contexto
       const datosUsuario = {
-        token: "token-generado", // En un sistema real, el backend debería proporcionar el token
-        usuario: {
-          id: userData.id,
-          nombre: userData.nombre,
-          email: userData.email
-        }
+        token: userData.token, // ← token real que viene del backend
+        usuario: userData.usuario // ← objeto usuario completo
       };
+      
 
       login(datosUsuario);
+
+      localStorage.setItem("token", userData.token);
+      localStorage.setItem("userId", userData.usuario.id);
+
       navigate("/perfil");
     } catch (error) {
       console.error('Error:', error);
