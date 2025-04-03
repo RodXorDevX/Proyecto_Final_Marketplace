@@ -19,7 +19,7 @@ const app = express();
 const PORT = 3000;
 
 //JWS
-const secretKey = process.env.JWT_SECRET;
+const secretKey = process.env.SECRET_KEY;
 if (!secretKey) {
     console.error("ERROR: La variable de entorno JWT_SECRET no está definida.");
     process.exit(1); // Detiene la ejecución si no hay clave JWT
