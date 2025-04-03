@@ -7,32 +7,26 @@ export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
   const agregarAlCarrito = (producto) => {
-    const productoExistente = carrito.find((item) =>
-      item.id === producto.id &&
-      item.talla === producto.talla
-    );
-  
-    if (productoExistente) {
-      setCarrito(
-        carrito.map((item) =>
-          item.id === producto.id && item.talla === producto.talla
-            ? { ...item, cantidad: item.cantidad + (producto.cantidad || 1) }
-            : item
-        )
+    setCarrito((prevCarrito) => {
+      const productoExistente = prevCarrito.find(
+        (item) => item.id === producto.id && item.talla === producto.talla
       );
-    } else {
-      setCarrito([
-        ...carrito,
-        { ...producto, cantidad: producto.cantidad || 1 }
-      ]);
-    }
+
+      if (productoExistente) {
+        return prevCarrito.map((item) =>
+          item.id === producto.id && item.talla === producto.talla
+            ? { ...item, cantidad: item.cantidad + 1 } // Siempre aumenta en 1
+            : item
+        );
+      } else {
+        return [...prevCarrito, { ...producto, cantidad: 1 }];
+      }
+    });
   };
-  
-  
 
   const disminuirCantidad = (productoId) => {
-    setCarrito(
-      carrito
+    setCarrito((prevCarrito) =>
+      prevCarrito
         .map((item) =>
           item.id === productoId
             ? { ...item, cantidad: item.cantidad - 1 }
@@ -41,16 +35,17 @@ export const CarritoProvider = ({ children }) => {
         .filter((item) => item.cantidad > 0) // Elimina si queda en 0
     );
   };
-  
-  
 
   const calcularTotal = () => {
-    return carrito.reduce((total, item) => total + parseFloat(item.price || item.precio) * item.cantidad, 0);
-};
+    return carrito.reduce(
+      (total, item) => total + parseFloat(item.price || item.precio) * item.cantidad,
+      0
+    );
+  };
 
   return (
-<CarritoContext.Provider value={{ carrito, agregarAlCarrito, disminuirCantidad, calcularTotal }}>
-{children}
+    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, disminuirCantidad, calcularTotal }}>
+      {children}
     </CarritoContext.Provider>
   );
 };

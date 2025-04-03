@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 import SidebarPerfil from "../components/SidebarPerfil";
 import "../assets/css/Carrito.css";
@@ -11,6 +12,8 @@ function Carrito() {
     disminuirCantidad,
     calcularTotal,
   } = useContext(CarritoContext);
+
+  const navigate = useNavigate();
 
   const handlePagar = () => {
     setShowSuccessMessage(true);
@@ -31,7 +34,7 @@ function Carrito() {
           ) : (
             carrito.map((item) => (
               <div key={item.id} className="carrito-item">
-                <img src={item.image || item.imagen} alt={item.title} />
+                <img src={item.image || item.imagen} alt={item.title || item.titulo} />
                 <div className="carrito-item-info">
                   <h4>{item.title || item.titulo}</h4>
                   <p>TALLA {item.talla || "S"} - {item.color || "BLANCO"}</p>
@@ -44,10 +47,15 @@ function Carrito() {
                 </div>
 
                 <p className="carrito-precio">
-                  ${parseFloat(item.price || item.precio).toLocaleString("es-CL")}
+                  ${item.price || item.precio}
                 </p>
 
-                <button>Ver</button>
+                <button 
+                  className="detalle-button" 
+                  onClick={() => navigate(`/publicacion/${item.id}`)}>
+                  Ver
+                </button>
+
                 <button onClick={() => disminuirCantidad(item.id)}>🗑️</button>
               </div>
             ))
@@ -60,12 +68,12 @@ function Carrito() {
             {carrito.map((item) => (
               <li key={item.id}>
                 {item.title || item.titulo}<br />
-                {parseFloat(item.price || item.precio).toLocaleString("es-CL")} x{item.cantidad}
+                ${item.price || item.precio} x{item.cantidad}
               </li>
             ))}
           </ul>
           <hr />
-          <p><strong>TOTAL:</strong> {calcularTotal().toLocaleString("es-CL")}</p>
+          <p><strong>TOTAL:</strong> ${calcularTotal()}</p>
           <button onClick={handlePagar}>PAGAR</button>
           {showSuccessMessage && (
             <div className="success-message">
