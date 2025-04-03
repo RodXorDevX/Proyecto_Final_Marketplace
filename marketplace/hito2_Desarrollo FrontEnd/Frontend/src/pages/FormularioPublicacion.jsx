@@ -1,6 +1,6 @@
 import "../assets/css/FormularioPublicacion.css";
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 const COLORES = [
   { nombre: "Negro", valor: "#000000" },
@@ -24,8 +24,8 @@ const COLORES = [
 const TALLAS = ["S", "M", "L", "XL"];
 
 function FormularioPublicacion() {
-  const inputRef = useRef(null);
   const [imagenes, setImagenes] = useState([]);
+  const [urlImagen, setUrlImagen] = useState(""); // Estado para la URL de la imagen
 
   const [formData, setFormData] = useState({
     titulo: "",
@@ -60,17 +60,20 @@ function FormularioPublicacion() {
     });
   };
 
-  const handleImagenChange = (e) => {
-    const files = Array.from(e.target.files);
-    const nuevosArchivos = files.slice(0, 4 - imagenes.length);
-    const previews = nuevosArchivos.map((file) => URL.createObjectURL(file));
-    setImagenes((prev) => [...prev, ...previews]);
-    e.target.value = null;
+  // Nuevo método para manejar el cambio de URL
+  const handleUrlChange = (e) => {
+    setUrlImagen(e.target.value);
   };
 
-  const abrirSelector = () => {
-    if (imagenes.length >= 4) return;
-    inputRef.current.click();
+  // Método para añadir la URL a la lista de imágenes
+  const agregarImagen = () => {
+    if (!urlImagen.trim()) return;
+    if (imagenes.length >= 4) {
+      alert("Solo puedes añadir hasta 4 imágenes");
+      return;
+    }
+    setImagenes([...imagenes, urlImagen]);
+    setUrlImagen(""); // Reiniciar el campo de entrada
   };
 
   const eliminarImagen = (index) => {
@@ -98,7 +101,7 @@ function FormularioPublicacion() {
       size: formData.tallas.join(","),
       stock: parseInt(formData.stock),
       imagen: imagenes[0] || null,
-      vendedor_id: parseInt(userId), // ✅ aquí usas el ID real
+      vendedor_id: parseInt(userId),
     };
   
     axios
@@ -114,21 +117,17 @@ function FormularioPublicacion() {
       });
   };
 
-
   return (
     <div className="formulario-publicacion-container">
       <div className="imagenes-publicacion">
         <div className="imagen-y-miniaturas">
-          <div className="zona-principal" onClick={abrirSelector}>
+          <div className="zona-principal">
             {imagenes[0] ? (
               <>
                 <img src={imagenes[0]} alt="Principal" />
                 <button
                   className="boton-eliminar"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    eliminarImagen(0);
-                  }}
+                  onClick={() => eliminarImagen(0)}
                 >
                   ×
                 </button>
@@ -145,10 +144,7 @@ function FormularioPublicacion() {
                 <div className="numero-overlay">+{index + 1}</div>
                 <button
                   className="boton-eliminar"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    eliminarImagen(index + 1);
-                  }}
+                  onClick={() => eliminarImagen(index + 1)}
                 >
                   ×
                 </button>
@@ -157,18 +153,23 @@ function FormularioPublicacion() {
           </div>
         </div>
 
-        <p className="titulo-imagenes">Título imágenes</p>
-        <p className="texto-subida" onClick={abrirSelector}>
-          Subir fotos (hasta 4)
+        <p className="titulo-imagenes">Añadir imágenes mediante URL</p>
+        {/* Campo de entrada para la URL de la imagen */}
+        <div className="url-input-container">
+          <input
+            type="url"
+            value={urlImagen}
+            onChange={handleUrlChange}
+            placeholder="Pega aquí la URL de la imagen"
+            className="url-input"
+          />
+          <button onClick={agregarImagen} className="agregar-url-btn">
+            Añadir
+          </button>
+        </div>
+        <p className="texto-info">
+          Añade hasta 4 imágenes usando URLs de internet
         </p>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          ref={inputRef}
-          style={{ display: "none" }}
-          onChange={handleImagenChange}
-        />
       </div>
 
       <div className="formulario-container">
@@ -288,4 +289,3 @@ function FormularioPublicacion() {
 }
 
 export default FormularioPublicacion;
-
