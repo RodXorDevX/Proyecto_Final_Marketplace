@@ -16,7 +16,7 @@ function DetallePublicacion() {
 
   // Cargar el producto
   useEffect(() => {
-    axios.get(`https://fakestoreapi.com/products/${id}`)
+    axios.get(`http://localhost:3000/productos/${id}`)
       .then((res) => {
         setProducto(res.data);
         setImagenes([res.data.image, res.data.image + "?1", res.data.image + "?2"]);

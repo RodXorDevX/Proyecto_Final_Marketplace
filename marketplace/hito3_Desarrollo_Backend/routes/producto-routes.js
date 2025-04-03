@@ -11,4 +11,7 @@ router.get('/filtros', productoController.getProductosFiltrados);
 // Ruta POST /productos para crear nuevos productos
 router.post('/', productoController.createProducto);
 
+//Ruta para obtener productos por ID
+router.get('/:id', productoController.getProductoPorId);
+
 module.exports = router;
