@@ -1,85 +1,124 @@
 import { useEffect, useState, useContext } from "react";
 import SidebarPerfil from "../components/SidebarPerfil";
-import { AuthContext } from "../context/AuthContext"; // Importa el contexto de autenticación
+import { AuthContext } from "../context/AuthContext";
 import "../assets/css/pedidos.css";
 
 export default function MisPedidos() {
   const [pedidos, setPedidos] = useState([]);
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState(null); // Estado de error
-  const { usuario } = useContext(AuthContext);  // Obtén el usuario logueado
+  const [mostrarOpciones, setMostrarOpciones] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { usuario } = useContext(AuthContext);
 
-  // Realizamos la llamada a la API para obtener los pedidos del usuario
   useEffect(() => {
-    if (!usuario) return;  // Si el usuario no está logueado, no hacer la llamada
-    
-    const usuarioId = usuario.usuario.id; // Obtener el ID del usuario logueado
-    const vendedorId = 1; // Aquí deberías obtener el ID del vendedor al que deseas acceder (por ejemplo, del producto o perfil)
-    
-    // Hacemos la solicitud al backend para obtener los pedidos de este vendedor
-    fetch(`http://localhost:3000/pedidos?usuario_id=${usuarioId}&vendedor_id=${vendedorId}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Datos recibidos:', data);  // Esto imprimirá la respuesta de la API
+    if (!usuario) return;
+    const vendedorId = usuario.usuario.id;
+
+    fetch(`http://localhost:3000/pedidos?vendedor_id=${vendedorId}`)
+      .then((res) => res.json())
+      .then((data) => {
         if (Array.isArray(data)) {
-          setPedidos(data);  // Guardamos los pedidos obtenidos en el estado
+          setPedidos(data);
         } else {
-          setError(data.error || "Error desconocido"); // Maneja el error si no es un array
+          setError(data.error || "Error desconocido");
         }
       })
-      .catch(error => {
-        console.error("Error al obtener los pedidos:", error);
-        setError("Hubo un problema al obtener los pedidos.");
+      .catch((err) => {
+        console.error("Error al obtener los pedidos:", err);
+        setError("Error al obtener los pedidos.");
       })
-      .finally(() => setLoading(false));  // Se ejecuta siempre, ya sea que haya éxito o error
+      .finally(() => setLoading(false));
   }, [usuario]);
+
+  const toggleOpciones = (pedidoId) => {
+    setMostrarOpciones((prev) => ({
+      ...prev,
+      [pedidoId]: !prev[pedidoId],
+    }));
+  };
+
+  const handleStatusChange = async (pedidoId, nuevoEstado) => {
+    try {
+      const res = await fetch(`http://localhost:3000/pedidos/${pedidoId}/estado`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ estado: nuevoEstado }), // <<--- CAMBIO AQUÍ
+      });
   
+      const data = await res.json();
+  
+      if (!res.ok) {
+        throw new Error(data.error || "Error al actualizar estado");
+      }
+  
+      // Actualiza el estado en frontend
+      setPedidos((prev) =>
+        prev.map((pedido) =>
+          pedido.id === pedidoId ? { ...pedido, status: data.status } : pedido
+        )
+      );
+  
+      // Oculta opciones luego del cambio
+      setMostrarOpciones((prev) => ({ ...prev, [pedidoId]: false }));
+    } catch (error) {
+      console.error("Error actualizando estado:", error);
+    }
+  };
 
-  // Si la página está cargando, mostramos un mensaje de carga
-  if (loading) {
-    return <div>Cargando pedidos...</div>;
-  }
-
-  // Si hubo un error, mostramos el mensaje de error
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Cargando pedidos...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="pedidos-container">
       <SidebarPerfil />
       <div className="pedidos-content">
         <h1>LISTADO DE PEDIDOS</h1>
+        <div className="pedidos-list">
+          {pedidos.map((pedido) => {
+            const estadoActual = pedido.status || "Pendiente";
+            const opciones = ["Pendiente", "Entregado", "Cancelado"].filter(
+              (estado) => estado !== estadoActual
+            );
 
-        {/* Si no hay pedidos, mostrar este mensaje */}
-        {pedidos.length === 0 ? (
-          <p>No tienes pedidos.</p>
-        ) : (
-          <div className="pedidos-list">
-            {/* Iteramos sobre los pedidos para mostrarlos */}
-            {pedidos.map((pedido) => (
-              <div key={pedido.id} className="pedido-item">
+            return (
+              <div key={pedido.id} className="pedido-box">
+                <img className="pedido-img" src={pedido.imagen} alt={pedido.titulo} />
                 <div className="pedido-info">
-                  {/* Muestra el título del producto */}
-                  <span className="producto">{pedido.titulo}</span>
-                  {/* Muestra la talla si está presente */}
-                  <span className="talla">{pedido.size || "Tamaño no especificado"}</span>
-                  {/* Muestra el nombre del usuario que hizo el pedido */}
-                  <span className="realizado">Realizado por: {pedido.usuario_nombre}</span>
-                </div>
-                <div className="pedido-status">
-                  {/* Muestra el ID del pedido y la fecha de creación */}
-                  <span>ID: {pedido.id}</span>
-                  <span>{pedido.created_at}</span>
-                  {/* Muestra el estado del pedido */}
-                  <button>{pedido.status}</button>
-                  {/* Muestra el precio total del pedido */}
-                  <span className="precio">${pedido.total}</span>
+                  <div className="pedido-texto">
+                    <h4>{pedido.titulo}</h4>
+                    {pedido.size && <p className="talla">Talla {pedido.size}</p>}
+                    <p>Comprado por: {pedido.usuario_nombre}</p>
+                    <p>{pedido.cantidad} unidades</p>
+                    <p>{new Date(pedido.created_at).toLocaleDateString("es-CL")}</p>
+                    <p className="precio">${Number(pedido.total).toLocaleString("es-CL")}</p>
+                  </div>
+                  <div className="pedido-estado">
+                    <button
+                      className={`estado-btn ${estadoActual.toLowerCase()}`}
+                      onClick={() => toggleOpciones(pedido.id)}
+                    >
+                      {estadoActual}
+                    </button>
+
+                    {mostrarOpciones[pedido.id] && (
+                      <div className="estado-opciones">
+                        {opciones.map((opcion) => (
+                          <button
+                            key={opcion}
+                            className={`estado-btn ${opcion.toLowerCase()}`}
+                            onClick={() => handleStatusChange(pedido.id, opcion)}
+                          >
+                            {opcion}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

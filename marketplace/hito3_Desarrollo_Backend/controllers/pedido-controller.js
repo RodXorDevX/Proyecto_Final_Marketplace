@@ -45,6 +45,7 @@ const createPedido = async (req, res) => {
             p.id, 
             p.total, 
             p.status, 
+            p.created_at,
             p.vendedor_id, 
             pi.producto_id, 
             pi.cantidad, 
@@ -67,6 +68,7 @@ const createPedido = async (req, res) => {
             p.id, 
             p.total, 
             p.status, 
+            p.created_at,
             p.vendedor_id, 
             pi.producto_id, 
             pi.cantidad, 
@@ -89,6 +91,7 @@ const createPedido = async (req, res) => {
             p.id, 
             p.total, 
             p.status, 
+            p.created_at,  
             p.vendedor_id, 
             pi.producto_id, 
             pi.cantidad, 
@@ -114,9 +117,52 @@ const createPedido = async (req, res) => {
     }
   };
   
+  const updateEstadoPedido = async (req, res) => {
+    const { id } = req.params;
+    const { estado } = req.body;
+  
+    try {
+      const result = await pool.query(
+        'UPDATE pedidos SET status = $1 WHERE id = $2 RETURNING *',
+        [estado, id]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Pedido no encontrado' });
+      }
+  
+      res.json({ status: result.rows[0].status });
+    } catch (error) {
+      console.error('Error al actualizar el estado del pedido:', error);
+      res.status(500).json({ error: 'Error del servidor' });
+    }
+  };
+  
+  // Si quieres usar la otra ruta también
+  const actualizarEstadoPedido = async (req, res) => {
+    const { pedido_id, nuevo_estado } = req.body;
+  
+    try {
+      const result = await pool.query(
+        'UPDATE pedidos SET status = $1 WHERE id = $2 RETURNING *',
+        [nuevo_estado, pedido_id]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Pedido no encontrado' });
+      }
+  
+      res.json({ message: 'Estado actualizado correctamente', pedido: result.rows[0] });
+    } catch (error) {
+      console.error('Error actualizando estado:', error);
+      res.status(500).json({ error: 'Error en el servidor' });
+    }
+  };
   
 
 module.exports = {
   createPedido,
-  getPedidos
+  getPedidos,
+  actualizarEstadoPedido,
+  updateEstadoPedido
 };
