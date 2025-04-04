@@ -26,5 +26,5 @@ function GaleriaDestacados({ search }) {
     </div>
   );
 }
-
+// GaleriaDestacados
 export default GaleriaDestacados;
