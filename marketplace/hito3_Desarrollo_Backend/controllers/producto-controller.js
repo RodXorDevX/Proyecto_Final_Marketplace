@@ -84,11 +84,56 @@ const createProducto = async (req, res) => {
       res.status(500).json({ error: 'Error en el servidor' });
     }
   };
+// Actualizar un producto existente
+const updateProducto = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const productoData = req.body;
+      
+      // Verificar si el producto existe
+      const productoExistente = await productoModel.getProductoPorId(id);
+      if (!productoExistente) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+      
+      // Verificar si el usuario tiene permisos para editar este producto
+      // (Esto dependerá de cómo manejas la autenticación y autorización)
+      // Por ejemplo:
+      // if (req.user.id !== productoExistente.vendedor_id && !req.user.isAdmin) {
+      //   return res.status(403).json({ error: 'No tienes permiso para editar este producto' });
+      // }
+      
+      // Actualizar el producto
+      const productoActualizado = await productoModel.updateProducto(id, productoData);
+      res.json(productoActualizado);
+    } catch (error) {
+      console.error('Error actualizando el producto:', error);
+      res.status(500).json({ error: 'Error en el servidor' });
+    }
+  };
 
+// Función para eliminar un producto
+const deleteProducto = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await productoModel.deleteProducto(id);
+        if (result) {
+            return res.status(204).send(); // No content
+        } else {
+            return res.status(404).json({ error: 'Producto no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error eliminando el producto:', error);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+};
+
+// Agregar a la lista de exports
 module.exports = {
     getProductos,
     getProductosFiltrados,
     createProducto,
-    getProductoPorId
+    getProductoPorId,
+    updateProducto,
+    deleteProducto
 };
-// --- END OF FILE producto-controller.js ---

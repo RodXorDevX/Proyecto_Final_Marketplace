@@ -1,8 +1,23 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "../assets/css/PublicacionCard.css";
 import defaultImage from "../assets/img/Default_Product.png";
+import { useState } from "react";
+import axios from "axios";
 
 function PublicacionCard({ publicacion }) {
+  const [error, setError] = useState(null);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/productos/${publicacion.id}`);
+      alert("Publicación eliminada con éxito");
+    } catch (err) {
+      setError("Error al eliminar la publicación");
+      console.error(err);
+    }
+  };
+
   return (
     <div className="publicacion-card">
       <img
@@ -15,12 +30,15 @@ function PublicacionCard({ publicacion }) {
         <p className="precio">${publicacion.precio || 10000}</p>
         <p className="stock">Stock disponible: {publicacion.stock || 0}</p>
         <div className="card-actions">
-          <button className="ver-btn">VER</button>
+          <Link to={`/productos/${publicacion.id}`} className="ver-btn">VER</Link>
           <div className="icon-buttons">
-            <button className="edit-btn"><FaEdit /></button>
-            <button className="delete-btn"><FaTrash /></button>
+            <Link to={`/productos/${publicacion.id}/editar`} className="edit-btn">
+              <FaEdit />
+            </Link>
+            <button className="delete-btn" onClick={handleDelete}><FaTrash /></button>
           </div>
         </div>
+        {error && <p className="error">{error}</p>}
       </div>
     </div>
   );

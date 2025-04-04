@@ -87,11 +87,93 @@ const getProductoPorId = async (id) => {
     const result = await pool.query(query);
     return result.rows[0]; // Puede ser undefined si no existe
   };
+// Función para actualizar un producto existente
+const updateProducto = async (id, productoData) => {
+    // Extraer solo los campos que se pueden actualizar
+    const { 
+        titulo, 
+        descripcion, 
+        precio, 
+        categoria_id, 
+        size, 
+        stock, 
+        imagen 
+    } = productoData;
+    
+    // Construir dinámicamente la consulta SQL para actualizar solo los campos proporcionados
+    let updateFields = [];
+    let queryParams = [id]; // El primer parámetro es siempre el ID
+    let paramIndex = 2; // Comenzamos en 2 porque $1 ya está usado para el ID
+    
+    // Para cada campo, verificar si existe en productoData y agregarlo a la consulta
+    if (titulo !== undefined) {
+        updateFields.push(`titulo = $${paramIndex++}`);
+        queryParams.push(titulo);
+    }
+    
+    if (descripcion !== undefined) {
+        updateFields.push(`descripcion = $${paramIndex++}`);
+        queryParams.push(descripcion);
+    }
+    
+    if (precio !== undefined) {
+        updateFields.push(`precio = $${paramIndex++}`);
+        queryParams.push(precio);
+    }
+    
+    if (categoria_id !== undefined) {
+        updateFields.push(`categoria_id = $${paramIndex++}`);
+        queryParams.push(categoria_id);
+    }
+    
+    if (size !== undefined) {
+        updateFields.push(`size = $${paramIndex++}`);
+        queryParams.push(size);
+    }
+    
+    if (stock !== undefined) {
+        updateFields.push(`stock = $${paramIndex++}`);
+        queryParams.push(stock);
+    }
+    
+    if (imagen !== undefined) {
+        updateFields.push(`imagen = $${paramIndex++}`);
+        queryParams.push(imagen);
+    }
+    
+    // Si no hay campos para actualizar, devolver el producto existente
+    if (updateFields.length === 0) {
+        const result = await pool.query('SELECT * FROM productos WHERE id = $1', [id]);
+        return result.rows[0];
+    }
+    
+    // Construir la consulta final usando pg-format
+    const query = format(`
+        UPDATE productos 
+        SET ${updateFields.join(', ')} 
+        WHERE id = $1 
+        RETURNING *
+    `, ...queryParams);
+    
+    console.log("Executing SQL (update):", query);
+    
+    const result = await pool.query(query, queryParams);
+    return result.rows[0];
+};
 
+// Función para eliminar un producto
+const deleteProducto = async (id) => {
+    const query = format('DELETE FROM productos WHERE id = %L RETURNING *', id);
+    const result = await pool.query(query);
+    return result.rowCount > 0; // Devuelve true si se eliminó un producto
+};
+
+// Agregar a la lista de exports
 module.exports = {
     getProductos,
     getProductosFiltrados,
     createProducto,
-    getProductoPorId
+    getProductoPorId,
+    updateProducto,
+    deleteProducto // Asegúrate de exportar esta función
 };
-// --- END OF FILE producto-model.js ---

@@ -11,7 +11,8 @@ import Carrito from './pages/Carrito';
 import Footer from './components/Footer';
 import Publicaciones from './pages/Publicaciones';
 import Pedidos from './pages/Pedidos';
-
+import CardProducto from './components/CardProducto';
+import EditarProducto from './components/EditarProducto';
 
 function App() {
 
@@ -58,6 +59,8 @@ function App() {
             </RutaProtegida>
           }
         />
+        <Route path="/productos/:id" element={<CardProducto />} />
+        <Route path="/productos/:id/editar" element={<EditarProducto />} />
       </Routes>
       <Footer />
       
