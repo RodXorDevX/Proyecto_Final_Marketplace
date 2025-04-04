@@ -11,13 +11,11 @@ import Carrito from './pages/Carrito';
 import Footer from './components/Footer';
 import Publicaciones from './pages/Publicaciones';
 import Pedidos from './pages/Pedidos';
-import ResumenCompra from './components/ResumenCompra';
-
+import ResumenCompra from './components/ResumenCompra';  // Esto se añade en tu versión
+import CardProducto from './components/CardProducto';  // Esto se añade en la versión remota
+import EditarProducto from './components/EditarProducto';  // Esto se añade en la versión remota
 
 function App() {
-
-
-
   return (
     <>
       <Navbar />
@@ -27,30 +25,30 @@ function App() {
         <Route path="/registro" element={<Register />} />
         <Route path="/resumen-compra" element={<ResumenCompra />} />
         <Route
-        path="/perfil"
-        element={
-        <RutaProtegida>
-        <MiPerfil />
-        </RutaProtegida>
-    }
-  />
-      <Route path="/publicacion/:id" element={<DetallePublicacion />} />
-      <Route
-      path="/carrito"
-      element={
-      <RutaProtegida>
-      <Carrito />
-      </RutaProtegida>
-  }
-/>
+          path="/perfil"
+          element={
+            <RutaProtegida>
+              <MiPerfil />
+            </RutaProtegida>
+          }
+        />
+        <Route path="/publicacion/:id" element={<DetallePublicacion />} />
         <Route
-      path="/publicar"
-      element={
-      <RutaProtegida>
-        <FormularioPublicacion />
-      </RutaProtegida>
-    }
-  />
+          path="/carrito"
+          element={
+            <RutaProtegida>
+              <Carrito />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/publicar"
+          element={
+            <RutaProtegida>
+              <FormularioPublicacion />
+            </RutaProtegida>
+          }
+        />
         <Route path="/publicaciones" element={<Publicaciones />} />
         <Route
           path="/pedidos"
@@ -60,9 +58,10 @@ function App() {
             </RutaProtegida>
           }
         />
+        <Route path="/productos/:id" element={<CardProducto />} />
+        <Route path="/productos/:id/editar" element={<EditarProducto />} />
       </Routes>
       <Footer />
-      
     </>
   );
 }
