@@ -1,30 +1,39 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardProducto from "./CardProducto";
 import '../assets/css/GaleriaDestacados.css';
 
-function GaleriaDestacados({ search }) {
-  const [productos, setProductos] = useState([]);
+function GaleriaDestacados() {
+  const [productosDestacados, setProductosDestacados] = useState([]);
 
   useEffect(() => {
-    axios.get("https://fakestoreapi.com/products")
-      .then((res) => setProductos(res.data))
-      .catch((err) => console.error("Error al obtener productos", err));
-  }, []);
+    const fetchProductos = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/productos");
+        const productos = response.data.data || response.data;
 
-  const productosFiltrados = productos
-    .filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
-    )
-    .slice(0, 4);
+        // Seleccionar 6 productos al azar
+        const productosAleatorios = productos.sort(() => 0.5 - Math.random()).slice(0, 6);
+        setProductosDestacados(productosAleatorios);
+      } catch (error) {
+        console.error("Error al obtener productos destacados", error);
+      }
+    };
+
+    fetchProductos();
+  }, []);
 
   return (
     <div className="galeria-destacados">
-      {productosFiltrados.map((item) => (
-        <CardProducto key={item.id} producto={item} />
+      {productosDestacados.map((producto) => (
+        <CardProducto key={producto.id} producto={producto} />
       ))}
     </div>
   );
 }
-// GaleriaDestacados
+
 export default GaleriaDestacados;
+
+
+ 

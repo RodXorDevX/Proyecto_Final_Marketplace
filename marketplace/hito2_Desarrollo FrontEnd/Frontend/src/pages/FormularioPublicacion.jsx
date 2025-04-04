@@ -2,26 +2,6 @@ import "../assets/css/FormularioPublicacion.css";
 import axios from "axios";
 import { useState } from "react";
 
-const COLORES = [
-  { nombre: "Negro", valor: "#000000" },
-  { nombre: "Blanco", valor: "#ffffff" },
-  { nombre: "Rojo", valor: "#ff0000" },
-  { nombre: "Azul", valor: "#0000ff" },
-  { nombre: "Marrón", valor: "#8b4513" },
-  { nombre: "Amarillo", valor: "#ffff00" },
-  { nombre: "Dorado", valor: "#ffd700" },
-  { nombre: "Plateado", valor: "#c0c0c0" },
-  { nombre: "Rosa", valor: "#ffc0cb" },
-  { nombre: "Verde", valor: "#008000" },
-  { nombre: "Naranjo", valor: "#ffa500" },
-  {
-    nombre: "Multicolor",
-    valor:
-      "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)",
-  },
-];
-
-const TALLAS = ["S", "M", "L", "XL"];
 
 function FormularioPublicacion() {
   const [imagenes, setImagenes] = useState([]);
@@ -30,9 +10,7 @@ function FormularioPublicacion() {
   const [formData, setFormData] = useState({
     titulo: "",
     precio: "",
-    categoria: "",
-    tallas: [],
-    colores: [],
+    categoria: "",     
     descripcion: "",
     stock: 1,
   });
@@ -42,23 +20,8 @@ function FormularioPublicacion() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTallaChange = (talla) => {
-    setFormData((prev) => {
-      const tallas = prev.tallas.includes(talla)
-        ? prev.tallas.filter((t) => t !== talla)
-        : [...prev.tallas, talla];
-      return { ...prev, tallas };
-    });
-  };
 
-  const handleColorChange = (color) => {
-    setFormData((prev) => {
-      const colores = prev.colores.includes(color)
-        ? prev.colores.filter((c) => c !== color)
-        : [...prev.colores, color];
-      return { ...prev, colores };
-    });
-  };
+ 
 
   // Nuevo método para manejar el cambio de URL
   const handleUrlChange = (e) => {
@@ -97,8 +60,7 @@ function FormularioPublicacion() {
       titulo: formData.titulo,
       descripcion: formData.descripcion,
       precio: parseFloat(formData.precio),
-      categoria_id: mapCategoria[formData.categoria],
-      size: formData.tallas.join(","),
+      categoria_id: mapCategoria[formData.categoria],      
       stock: parseInt(formData.stock),
       imagen: imagenes[0] || null,
       vendedor_id: parseInt(userId),
@@ -231,44 +193,9 @@ function FormularioPublicacion() {
             </select>
           </div>
 
-          {(formData.categoria === "hombre" || formData.categoria === "mujer") && (
-            <div className="grupo-input">
-              <label>Tallas</label>
-              <div className="tallas-checkboxes">
-                {TALLAS.map((talla) => (
-                  <label key={talla}>
-                    <input
-                      type="checkbox"
-                      checked={formData.tallas.includes(talla)}
-                      onChange={() => handleTallaChange(talla)}
-                    />{" "}
-                    {talla}
-                  </label>
-                ))}
-              </div>
-            </div>
-          )}
+        
 
-          {formData.categoria && (
-            <div className="grupo-input">
-              <label>Colores</label>
-              <div className="colores-selector">
-                {COLORES.map((color) => (
-                  <div
-                    key={color.nombre}
-                    title={color.nombre}
-                    onClick={() => handleColorChange(color.nombre)}
-                    className={`color-box ${
-                      formData.colores.includes(color.nombre)
-                        ? "seleccionado"
-                        : ""
-                    }`}
-                    style={{ background: color.valor }}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+        
 
           <div className="grupo-input">
             <label htmlFor="descripcion">Descripción</label>

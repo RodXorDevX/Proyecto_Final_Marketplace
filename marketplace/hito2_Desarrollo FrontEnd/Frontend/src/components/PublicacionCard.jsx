@@ -2,11 +2,20 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../assets/css/PublicacionCard.css";
 import defaultImage from "../assets/img/Default_Product.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function PublicacionCard({ publicacion }) {
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Validar las propiedades de 'publicacion'
+    if (!publicacion || !publicacion.id || !publicacion.titulo) {
+      setError("Publicación inválida");
+    } else {
+      setError(null); // Resetea el error si es válido
+    }
+  }, [publicacion]);
 
   const handleDelete = async () => {
     try {
@@ -30,7 +39,7 @@ function PublicacionCard({ publicacion }) {
         <p className="precio">${publicacion.precio || 10000}</p>
         <p className="stock">Stock disponible: {publicacion.stock || 0}</p>
         <div className="card-actions">
-          <Link to={`/productos/${publicacion.id}`} className="ver-btn">VER</Link>
+          <Link to={`/publicacion/${publicacion.id}`} className="ver-btn">VER</Link>
           <div className="icon-buttons">
             <Link to={`/productos/${publicacion.id}/editar`} className="edit-btn">
               <FaEdit />
