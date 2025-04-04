@@ -6,12 +6,12 @@ import "../assets/css/Carrito.css";
 
 function Carrito() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);  // Estado para procesar la compra
+  const [isProcessing, setIsProcessing] = useState(false);
   const { carrito, calcularTotal, vaciarCarrito } = useContext(CarritoContext);
   const navigate = useNavigate();
 
   const handlePagar = async () => {
-    setIsProcessing(true);  // Bloqueamos el botón mientras se procesa la compra
+    setIsProcessing(true);
     try {
       const response = await fetch('http://localhost:3000/pedidos/crear', {
         method: 'POST',
@@ -19,7 +19,7 @@ function Carrito() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          usuario_id: 1,  // Asegúrate de obtener el ID del usuario logueado
+          usuario_id: 1, // Ajustar según el usuario logueado
           carrito: carrito.map(item => ({
             producto_id: item.id,
             cantidad: item.cantidad,
@@ -27,34 +27,27 @@ function Carrito() {
           }))
         }),
       });
-  
-      if (!response.ok) {
-        throw new Error('Error al crear el pedido');
-      }
-  
+
+      if (!response.ok) throw new Error('Error al crear el pedido');
       const data = await response.json();
       console.log(data);
-  
-      // Mostrar mensaje de éxito
+
       setShowSuccessMessage(true);
-  
-      // Vaciar el carrito
       vaciarCarrito();
-  
-      // Redirigir a "ResumenCompra" pasando el carrito y total como estado
+
       setTimeout(() => {
         setShowSuccessMessage(false);
         setIsProcessing(false);
-        navigate('/resumen-compra', { state: { carrito, total: calcularTotal() } });  // Pasamos los datos al estado de la navegación
+        navigate('/resumen-compra', { state: { carrito, total: calcularTotal() } });
       }, 3000);
-  
+
     } catch (error) {
       console.error('Error al procesar el pago:', error);
       alert('Hubo un error al procesar tu pedido');
-      setIsProcessing(false);  // Si hay error, dejar de procesar
+      setIsProcessing(false);
     }
   };
-  
+
   return (
     <div className="carrito-container">
       <SidebarPerfil />
@@ -76,7 +69,7 @@ function Carrito() {
                   <span>{item.cantidad}</span>
                   <button>+</button>
                 </div>
-                <p className="carrito-precio">${item.precio}</p>
+                <p className="carrito-precio">${Number(item.precio).toLocaleString('es-CL')}</p>
               </div>
             ))
           )}
@@ -87,12 +80,12 @@ function Carrito() {
             {carrito.map((item) => (
               <li key={item.id}>
                 {item.title || item.titulo}<br />
-                ${item.precio} x {item.cantidad}
+                ${Number(item.precio).toLocaleString('es-CL')} x {item.cantidad}
               </li>
             ))}
           </ul>
           <hr />
-          <p><strong>TOTAL:</strong> ${calcularTotal()}</p>
+          <p><strong>TOTAL:</strong> ${calcularTotal().toLocaleString('es-CL')}</p>
           <button onClick={handlePagar} disabled={isProcessing}>
             {isProcessing ? 'Procesando...' : 'PAGAR'}
           </button>

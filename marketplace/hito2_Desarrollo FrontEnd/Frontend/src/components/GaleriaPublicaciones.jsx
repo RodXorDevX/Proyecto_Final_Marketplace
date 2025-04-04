@@ -19,6 +19,7 @@ function GaleriaPublicaciones({ search }) {
     const fetchProductos = async () => {
       try {
         const backendRes = await axios.get("http://localhost:3000/productos");
+        console.log('Datos recibidos del backend:', backendRes.data); // Verifica los datos aquí
         const productosBackend = backendRes.data.data || backendRes.data;
         setProductos(productosBackend);
       } catch (err) {
@@ -28,7 +29,6 @@ function GaleriaPublicaciones({ search }) {
   
     fetchProductos();
   }, []);
-  
   const productosFiltrados = productos.filter((item) => {
     const titulo = item.titulo || "";
     const categoriaTexto = mapCategoriaIdToNombre[item.categoria_id] || "";
@@ -38,6 +38,8 @@ function GaleriaPublicaciones({ search }) {
   
     return matchesSearch && matchesCategory;
   });
+  
+  console.log("Productos filtrados:", productosFiltrados);
 
   return (
     <div className="galeria-container">
