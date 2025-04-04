@@ -6,6 +6,7 @@ export const CarritoContext = createContext();
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
+  // Función para agregar productos al carrito
   const agregarAlCarrito = (producto) => {
     setCarrito((prevCarrito) => {
       const productoExistente = prevCarrito.find(
@@ -24,6 +25,7 @@ export const CarritoProvider = ({ children }) => {
     });
   };
 
+  // Función para disminuir la cantidad de productos en el carrito
   const disminuirCantidad = (productoId) => {
     setCarrito((prevCarrito) =>
       prevCarrito
@@ -36,6 +38,12 @@ export const CarritoProvider = ({ children }) => {
     );
   };
 
+  // Función para vaciar el carrito
+  const vaciarCarrito = () => {
+    setCarrito([]);  // Vacía el carrito
+  };
+
+  // Función para calcular el total del carrito
   const calcularTotal = () => {
     return carrito.reduce(
       (total, item) => total + parseFloat(item.price || item.precio) * item.cantidad,
@@ -44,7 +52,7 @@ export const CarritoProvider = ({ children }) => {
   };
 
   return (
-    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, disminuirCantidad, calcularTotal }}>
+    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, disminuirCantidad, vaciarCarrito, calcularTotal }}>
       {children}
     </CarritoContext.Provider>
   );

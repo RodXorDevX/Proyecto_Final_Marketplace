@@ -60,7 +60,7 @@ function DetallePublicacion() {
 
       <div className="detalle-info">
         <h2 className="detalle-titulo">{producto.title}</h2>
-        <p className="detalle-precio">${producto.price}</p>
+        <p className="detalle-precio">${Number(producto.price).toLocaleString('es-CL')}</p>
 
         <div className="detalle-descripcion">
           <p><strong>Tipo de Producto:</strong> {producto.category}</p>

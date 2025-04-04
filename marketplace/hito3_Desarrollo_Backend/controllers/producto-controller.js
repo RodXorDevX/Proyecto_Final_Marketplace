@@ -5,33 +5,33 @@ const { getProductosHATEOAS } = require('../utils/hateoas-util');
 
 // Obtener productos con paginación, ordenamiento y filtrado opcional por vendedor
 const getProductos = async (req, res) => {
-    try {
-        // Destructure potential filters including vendedor_id
-        const { limit = 10, page = 1, order_by, vendedor_id } = req.query;
+  try {
+      // Destructure potential filters including vendedor_id
+      const { limit = 10, page = 1, order_by, vendedor_id } = req.query;
 
-        // Validate pagination parameters
-        if (isNaN(limit) || isNaN(page) || page < 1 || limit < 1) {
-            return res.status(400).json({ error: 'Parámetros de paginación inválidos' });
-        }
-        // Validate vendedor_id if provided (optional, depends on requirements)
-        if (vendedor_id && isNaN(parseInt(vendedor_id))) {
-             return res.status(400).json({ error: 'Parámetro vendedor_id inválido' });
-        }
+      // Validate pagination parameters
+      if (isNaN(limit) || isNaN(page) || page < 1 || limit < 1) {
+          return res.status(400).json({ error: 'Parámetros de paginación inválidos' });
+      }
+      // Validate vendedor_id if provided (optional, depends on requirements)
+      if (vendedor_id && isNaN(parseInt(vendedor_id))) {
+           return res.status(400).json({ error: 'Parámetro vendedor_id inválido' });
+      }
 
-        // Pass vendedor_id to the model function
-        const productos = await productoModel.getProductos(
-            parseInt(limit),
-            parseInt(page),
-            order_by,
-            vendedor_id ? parseInt(vendedor_id) : undefined // Pass parsed ID or undefined
-        );
+      // Pass vendedor_id to the model function
+      const productos = await productoModel.getProductos(
+          parseInt(limit),
+          parseInt(page),
+          order_by,
+          vendedor_id ? parseInt(vendedor_id) : undefined // Pass parsed ID or undefined
+      );
 
-        // Apply HATEOAS formatting
-        res.json(getProductosHATEOAS(productos));
-    } catch (error) {
-        console.error('Error obteniendo los productos:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
-    }
+      // Apply HATEOAS formatting
+      res.json(getProductosHATEOAS(productos));  // Esta línea formatea y envía los datos
+  } catch (error) {
+      console.error('Error obteniendo los productos:', error);
+      res.status(500).json({ error: 'Error en el servidor' });
+  }
 };
 
 // Obtener productos con filtros (Kept as is, uses a different endpoint /productos/filtros)
@@ -95,13 +95,7 @@ const updateProducto = async (req, res) => {
       if (!productoExistente) {
         return res.status(404).json({ error: 'Producto no encontrado' });
       }
-      
-      // Verificar si el usuario tiene permisos para editar este producto
-      // (Esto dependerá de cómo manejas la autenticación y autorización)
-      // Por ejemplo:
-      // if (req.user.id !== productoExistente.vendedor_id && !req.user.isAdmin) {
-      //   return res.status(403).json({ error: 'No tienes permiso para editar este producto' });
-      // }
+
       
       // Actualizar el producto
       const productoActualizado = await productoModel.updateProducto(id, productoData);
