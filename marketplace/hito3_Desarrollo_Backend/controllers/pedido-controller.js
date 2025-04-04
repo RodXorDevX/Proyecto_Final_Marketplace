@@ -131,7 +131,7 @@ const createPedido = async (req, res) => {
         return res.status(404).json({ error: 'Pedido no encontrado' });
       }
   
-      res.json({ message: 'Estado actualizado', pedido: result.rows[0] });
+      res.json({ status: result.rows[0].status });
     } catch (error) {
       console.error('Error al actualizar el estado del pedido:', error);
       res.status(500).json({ error: 'Error del servidor' });
