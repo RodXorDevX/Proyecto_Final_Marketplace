@@ -11,6 +11,7 @@ import Carrito from './pages/Carrito';
 import Footer from './components/Footer';
 import Publicaciones from './pages/Publicaciones';
 import Pedidos from './pages/Pedidos';
+import ResumenCompra from './components/ResumenCompra';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
+        <Route path="/resumen-compra" element={<ResumenCompra />} />
         <Route
         path="/perfil"
         element={

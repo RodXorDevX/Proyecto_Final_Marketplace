@@ -20,7 +20,7 @@ function CardProducto({ producto }) {
       <h4>{titulo}</h4>
       
       <div className="acciones">
-        <p>${precio}</p>
+      <p>${Number(precio).toLocaleString('es-CL')}</p>
 
         <div className="control-cantidad">
           <button

@@ -12,6 +12,7 @@ const usuariosRoutes = require('./routes/usuario-routes');
 const carritosRoutes = require('./routes/carrito-routes');
 const categoriasRoutes = require('./routes/categoria-routes');
 const tipoUsuarioRoutes = require('./routes/tipo-usuario-routes');
+const pedidosRoutes = require('./routes/pedido-routes');
 
 // Configuración inicial de Express
 const app = express();
@@ -35,6 +36,7 @@ app.use('/usuarios', usuariosRoutes);
 app.use('/carrito', carritosRoutes);
 app.use('/categorias', categoriasRoutes);
 app.use('/tipo-usuario', tipoUsuarioRoutes);
+app.use('/pedidos', pedidosRoutes);
 
 // Test de conexión a base de datos
 const pool = require('./config/db-config');
