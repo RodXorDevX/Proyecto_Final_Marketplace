@@ -1,4 +1,5 @@
 const pool = require('../config/db-config');
+const pedidoController = require('../controllers/pedido-controller');
 
 // Crear un nuevo pedido
 const createPedido = async (usuario_id, total, vendedor_id) => {
