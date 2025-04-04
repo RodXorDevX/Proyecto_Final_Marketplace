@@ -29,7 +29,25 @@ const createTipoUsuario = async (req, res) => {
     }
 };
 
+const updateEstadoPedido = async (req, res) => {
+    const { id } = req.params;
+    const { nuevoEstado } = req.body;
+  
+    try {
+      const result = await pool.query(
+        'UPDATE pedidos SET status = $1 WHERE id = $2 RETURNING *',
+        [nuevoEstado, id]
+      );
+      res.status(200).json(result.rows[0]);
+    } catch (error) {
+      console.error("Error al actualizar el estado del pedido:", error);
+      res.status(500).json({ error: "Error en el servidor" });
+    }
+  };
+  
+
 module.exports = {
     getTiposUsuario,
-    createTipoUsuario
+    createTipoUsuario,
+    updateEstadoPedido
 };
