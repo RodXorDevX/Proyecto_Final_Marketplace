@@ -53,23 +53,28 @@ const getProductosFiltrados = async (req, res) => {
     }
 };
 
-// Crear un nuevo producto (Kept as is)
 const createProducto = async (req, res) => {
-    try {
+  try {
       console.log("🟨 Datos recibidos en el backend:", req.body);
-      const productoData = req.body;
-      // Ensure vendedor_id is included in productoData from the frontend when creating
-      if (!productoData.vendedor_id) {
-          // Potentially get it from authenticated user session/token if not sent by client
-          return res.status(400).json({ error: "Falta el ID del vendedor (vendedor_id)." });
+      const { titulo, descripcion, precio, categoria_id, vendedor_id } = req.body;
+
+      // Validación de datos obligatorios
+      if (!titulo || !descripcion || !precio || !categoria_id || !vendedor_id) {
+          return res.status(400).json({ error: "Faltan datos obligatorios" });
       }
+
+      // Crear el producto en la base de datos
+      const productoData = { titulo, descripcion, precio, categoria_id, vendedor_id };
       const nuevoProducto = await productoModel.createProducto(productoData);
+
+      // Devolver el producto creado con código 201 (Creado)
       res.status(201).json(nuevoProducto);
-    } catch (error) {
+  } catch (error) {
       console.error("🔥 Error creando el producto:", error);
       res.status(500).json({ error: "Error en el servidor" });
-    }
-  };
+  }
+};
+
 
   const getProductoPorId = async (req, res) => {
     try {
