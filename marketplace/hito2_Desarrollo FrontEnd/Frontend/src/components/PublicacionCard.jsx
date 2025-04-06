@@ -36,7 +36,7 @@ function PublicacionCard({ publicacion }) {
       />
       <div className="card-content">
         <h3>{publicacion.titulo}</h3>
-        <p className="precio">${publicacion.precio || 10000}</p>
+        <p className="precio">${(Math.floor(publicacion.precio) || 10000).toLocaleString()}</p>
         <p className="stock">Stock disponible: {publicacion.stock || 0}</p>
         <div className="card-actions">
           <Link to={`/publicacion/${publicacion.id}`} className="ver-btn">VER</Link>

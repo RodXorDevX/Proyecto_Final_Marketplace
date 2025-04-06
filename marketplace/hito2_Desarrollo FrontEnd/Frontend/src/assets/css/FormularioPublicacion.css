@@ -155,6 +155,8 @@
   
   .formulario-container input,
   .formulario-container textarea {
+
+
     width: 100%;
     padding: 0.9rem 1.2rem;
     border-radius: 1rem;
@@ -220,4 +222,17 @@
   .grupo-input select {
     margin-top: 0;
   }
+  .url-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
   
+  .url-input-container label {
+    font-weight: bold;
+    color: #0a1c3d;
+  }
+  
+  .url-input-container input {
+    margin-top: 0;
+  }

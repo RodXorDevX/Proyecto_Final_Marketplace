@@ -12,20 +12,25 @@
     display: flex;
     flex-direction: row;
     gap: 1rem; /* Añadido para separar imagen principal de miniaturas */
-    align-items: flex-start;
+    align-items: center;
     width: 50%;
     background-color: white;
     padding: 2rem;
   }
   
   .imagen-principal img {
+    display: flex;
+    justify-content: center;
     width: 350px;
     height: auto;
     object-fit: contain;
-    margin-bottom: 1rem;
+   
   }
 
   .imagen-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 1;
   }
   
@@ -46,7 +51,7 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
   }
   
   .detalle-titulo {
@@ -115,18 +120,23 @@
   
   .cantidad-control {
     display: flex;
-    align-items: center;
+    align-items: center;    
     gap: 10px;
     margin-top: 0.5rem;
   }
   
   .cantidad-control button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 32px;
     height: 32px;
     font-size: 18px;
     background-color: #c4c4c4;
     border: none;
     cursor: pointer;
+
+    
   }
   
   .cantidad-control span {
@@ -134,6 +144,7 @@
     font-weight: bold;
     min-width: 24px;
     text-align: center;
+    
   }
   
   .btn-agregar {

@@ -4,7 +4,7 @@ import axios from "axios";
 import CardProducto from "./CardProducto";
 import '../assets/css/GaleriaDestacados.css';
 
-function GaleriaDestacados() {
+function GaleriaDestacados({ search }) {
   const [productosDestacados, setProductosDestacados] = useState([]);
 
   useEffect(() => {
@@ -13,8 +13,11 @@ function GaleriaDestacados() {
         const response = await axios.get("http://localhost:3000/productos");
         const productos = response.data.data || response.data;
 
-        // Seleccionar 6 productos al azar
-        const productosAleatorios = productos.sort(() => 0.5 - Math.random()).slice(0, 6);
+        console.log(productos);
+
+        // Filtrar productos similares
+        const productosFiltrados = productos.filter(producto => producto.titulo.toLowerCase().includes(search ? search.toLowerCase() : ''));
+        const productosAleatorios = productosFiltrados.sort(() => 0.5 - Math.random()).slice(0, 10);
         setProductosDestacados(productosAleatorios);
       } catch (error) {
         console.error("Error al obtener productos destacados", error);
@@ -22,7 +25,7 @@ function GaleriaDestacados() {
     };
 
     fetchProductos();
-  }, []);
+  }, [search]);
 
   return (
     <div className="galeria-destacados">

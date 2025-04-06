@@ -12,7 +12,7 @@ function GaleriaPublicaciones({ search }) {
     1: "hombre",
     2: "mujer",
     3: "accesorios",
-    4: "tecnologia"
+    4: "tecnología"
   };
 
   useEffect(() => {

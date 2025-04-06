@@ -9,7 +9,7 @@ function MenuCategorias({ onSelectCategory }) {
     { id: 'hombre', label: 'Hombre' },
     { id: 'mujer', label: 'Mujer' },
     { id: 'accesorios', label: 'Accesorios' },
-    { id: 'tecnologia', label: 'Tecnología' }
+    { id: 'tecnología', label: 'Tecnología' }
   ];
 
   const handleCategoryClick = (categoriaId) => {

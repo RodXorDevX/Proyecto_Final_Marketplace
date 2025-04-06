@@ -10,8 +10,33 @@ function CardProducto({ producto }) {
 
   if (!producto?.id) return null;
 
-  const { id, titulo, precio, imagen } = producto;
+  const { id, titulo, precio, imagen, rating } = producto;
   const cantidad = carrito.find((p) => p.id === id)?.cantidad || 0;
+  
+  // Si rating no está definido, asumimos un valor predeterminado de 0
+  const estrellas = rating || 0;
+
+  // Función para renderizar las estrellas
+  const renderEstrellas = (cantidad) => {
+    const estrellas = [];
+    
+    // Crear 5 estrellas (llenas o vacías según el rating)
+    for (let i = 1; i <= 5; i++) {
+      if (i <= cantidad) {
+        // Estrella llena
+        estrellas.push(
+          <span key={i} className="estrella llena">★</span>
+        );
+      } else {
+        // Estrella vacía
+        estrellas.push(
+          <span key={i} className="estrella vacia">☆</span>
+        );
+      }
+    }
+    
+    return estrellas;
+  };
 
   return (
     <div className="producto">
@@ -19,11 +44,20 @@ function CardProducto({ producto }) {
         <img src={imagen || "https://via.placeholder.com/150"} alt={titulo} />
       </div>
 
+      <div className="rating-container">
+        {renderEstrellas(estrellas)}
+      </div>
+
       <h4>{titulo}</h4>
 
       <div className="acciones">
         <p>${Number(precio).toLocaleString('es-CL')}</p>
-
+        <button 
+          className="detalle-button" 
+          onClick={() => navigate(`/publicacion/${id}`)}
+        >
+          Ver detalle
+        </button>
         <div className="control-cantidad">
           <button onClick={() => disminuirCantidad(id)} disabled={cantidad === 0}>
             Quitar
@@ -33,13 +67,6 @@ function CardProducto({ producto }) {
             Agregar
           </button>
         </div>
-
-        <button 
-          className="detalle-button" 
-          onClick={() => navigate(`/publicacion/${id}`)}
-        >
-          Ver detalle
-        </button>
       </div>
     </div>
   );

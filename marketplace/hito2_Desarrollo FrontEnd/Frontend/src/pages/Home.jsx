@@ -40,9 +40,7 @@ function Home() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button className="search-button">
-                <FaSearch color="#666" size={20} />
-              </button>
+           
             </div>
           </div>
         </div>

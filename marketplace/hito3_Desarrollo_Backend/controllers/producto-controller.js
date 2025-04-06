@@ -7,7 +7,7 @@ const { getProductosHATEOAS } = require('../utils/hateoas-util');
 const getProductos = async (req, res) => {
   try {
       // Destructure potential filters including vendedor_id
-      const { limit = 10, page = 1, order_by, vendedor_id } = req.query;
+      const { limit = 100, page = 1, order_by, vendedor_id } = req.query;
 
       // Validate pagination parameters
       if (isNaN(limit) || isNaN(page) || page < 1 || limit < 1) {
