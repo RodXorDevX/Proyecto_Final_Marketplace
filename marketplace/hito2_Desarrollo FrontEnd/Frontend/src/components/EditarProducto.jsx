@@ -14,6 +14,7 @@ function EditarProducto() {
     imagen: ""
   });
   const [categorias, setCategorias] = useState([]);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function EditarProducto() {
     };
 
     fetchCategorias();
-  }, []);
+  }, [ ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,6 +52,7 @@ function EditarProducto() {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:3000/productos/${id}`, producto);
+      console.log("Producto actualizado:", producto);
       alert("Producto actualizado con éxito");
       navigate(`/productos/${id}`); // Redirigir a la página del producto
     } catch (error) {
@@ -80,10 +82,10 @@ function EditarProducto() {
         </div>
         <div className="form-group">
           <label htmlFor="categoria">Categoría:</label>
-          <select id="categoria" name="categoria" value={producto.categoria} onChange={handleChange} required>
+          <select id="categoria" name="categoria_id" value={producto.categoria} onChange={handleChange} required>
             <option value="">Selecciona una categoría</option>
-            {categorias.map((cat) => (
-              <option key={cat.id} value={cat.nombre}>{cat.nombre}</option>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
             ))}
           </select>
         </div>

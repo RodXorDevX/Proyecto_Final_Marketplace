@@ -94,7 +94,7 @@ const updateProducto = async (req, res) => {
     try {
       const { id } = req.params;
       const productoData = req.body;
-      
+      console.log('🟨 Datos recibidos en el backend:', productoData);
       // Verificar si el producto existe
       const productoExistente = await productoModel.getProductoPorId(id);
       if (!productoExistente) {
@@ -105,6 +105,7 @@ const updateProducto = async (req, res) => {
       // Actualizar el producto
       const productoActualizado = await productoModel.updateProducto(id, productoData);
       res.json(productoActualizado);
+      console.log('Producto actualizado:', productoActualizado);
     } catch (error) {
       console.error('Error actualizando el producto:', error);
       res.status(500).json({ error: 'Error en el servidor' });
