@@ -52,10 +52,12 @@ function DetallePublicacion() {
     setCantidad(cantidadTotal > 0 ? cantidadTotal : 1);
   }, [producto, carrito]);
 
+  console.log("Producto agregado:", producto);
   const handleAgregar = () => {
-    agregarAlCarrito({ 
-      ...producto,    
-      cantidad 
+    agregarAlCarrito({
+      ...producto,
+      cantidad,
+      vendedor_id: producto.usuario_id || producto.vendedor_id // <- aseguramos que venga este campo
     });
   };
 
