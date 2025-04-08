@@ -1,5 +1,7 @@
 .galeria-container {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: 2rem;
     padding: 1rem;
 }
@@ -7,7 +9,9 @@
 .galeria-publicaciones {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: flex-start;
+    padding: 1.2rem;
+
+    gap: 2rem;
+    justify-content: center;
     flex: 1;
 }

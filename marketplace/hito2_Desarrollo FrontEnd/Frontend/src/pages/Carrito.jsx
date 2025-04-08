@@ -7,7 +7,7 @@ import "../assets/css/Carrito.css";
 function Carrito() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const { carrito, calcularTotal, vaciarCarrito } = useContext(CarritoContext);
+  const { carrito, calcularTotal, vaciarCarrito, agregarAlCarrito, disminuirCantidad } = useContext(CarritoContext);
   const navigate = useNavigate();
 
   const handlePagar = async () => {
@@ -65,9 +65,9 @@ function Carrito() {
                   <p>TALLA {item.talla || "S"} - {item.color || "BLANCO"}</p>
                 </div>
                 <div className="carrito-cantidad">
-                  <button>-</button>
+                  <button onClick={() => disminuirCantidad(item.id)}>-</button>
                   <span>{item.cantidad}</span>
-                  <button>+</button>
+                  <button onClick={() => agregarAlCarrito(item)}>+</button>
                 </div>
                 <p className="carrito-precio">${Number(item.precio).toLocaleString('es-CL')}</p>
               </div>

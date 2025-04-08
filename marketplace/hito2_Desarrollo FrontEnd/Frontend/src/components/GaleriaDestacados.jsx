@@ -17,7 +17,7 @@ function GaleriaDestacados({ search }) {
 
         // Filtrar productos similares
         const productosFiltrados = productos.filter(producto => producto.titulo.toLowerCase().includes(search ? search.toLowerCase() : ''));
-        const productosAleatorios = productosFiltrados.sort(() => 0.5 - Math.random()).slice(0, 10);
+        const productosAleatorios = productosFiltrados.sort(() => 0.5 - Math.random()).slice(0, 8);
         setProductosDestacados(productosAleatorios);
       } catch (error) {
         console.error("Error al obtener productos destacados", error);
