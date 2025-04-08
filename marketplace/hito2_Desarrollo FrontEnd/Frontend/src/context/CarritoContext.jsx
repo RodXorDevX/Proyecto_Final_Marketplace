@@ -14,9 +14,14 @@ export const CarritoProvider = ({ children }) => {
       );
 
       if (productoExistente) {
+        // Check if we have enough stock
+        if (productoExistente.cantidad >= (producto.stock || producto.cantidad_disponible || Infinity)) {
+          alert('No hay suficiente stock disponible');
+          return prevCarrito;
+        }
         return prevCarrito.map((item) =>
           item.id === producto.id && item.talla === producto.talla
-            ? { ...item, cantidad: item.cantidad + 1 } // Siempre aumenta en 1
+            ? { ...item, cantidad: item.cantidad + 1 }
             : item
         );
       } else {

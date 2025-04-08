@@ -4,7 +4,7 @@ import { CarritoContext } from "../context/CarritoContext";
 import SidebarPerfil from "../components/SidebarPerfil";
 import "../assets/css/Carrito.css";
 
-function Carrito() {
+function Carrito({}) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const { carrito, calcularTotal, vaciarCarrito, agregarAlCarrito, disminuirCantidad } = useContext(CarritoContext);
@@ -13,6 +13,7 @@ function Carrito() {
   const handlePagar = async () => {
     setIsProcessing(true);
     try {
+      // First create the order
       const response = await fetch('http://localhost:3000/pedidos/crear', {
         method: 'POST',
         headers: {
@@ -30,7 +31,22 @@ function Carrito() {
 
       if (!response.ok) throw new Error('Error al crear el pedido');
       const data = await response.json();
-      console.log(data);
+
+      // Update stock for each product
+      await Promise.all(carrito.map(async (item) => {
+        const stockResponse = await fetch(`http://localhost:3000/productos/${item.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            stock: (item.stock || item.cantidad_disponible) - item.cantidad
+          })
+        });
+        if (!stockResponse.ok) {
+          console.error(`Error updating stock for product ${item.id}`);
+        }
+      }));
 
       setShowSuccessMessage(true);
       vaciarCarrito();
@@ -67,7 +83,12 @@ function Carrito() {
                 <div className="carrito-cantidad">
                   <button onClick={() => disminuirCantidad(item.id)}>-</button>
                   <span>{item.cantidad}</span>
-                  <button onClick={() => agregarAlCarrito(item)}>+</button>
+                  <button 
+                    onClick={() => agregarAlCarrito(item)}
+                    disabled={item.cantidad >= (item.stock || item.cantidad_disponible || Infinity)}
+                  >
+                    +
+                  </button>
                 </div>
                 <p className="carrito-precio">${Number(item.precio).toLocaleString('es-CL')}</p>
               </div>
