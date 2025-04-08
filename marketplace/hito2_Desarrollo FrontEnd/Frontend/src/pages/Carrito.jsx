@@ -12,6 +12,17 @@ function Carrito() {
 
   const handlePagar = async () => {
     setIsProcessing(true);
+  
+    // ✅ Verifica y loguea antes de enviar
+    console.log("Carrito actual antes del fetch:", carrito);
+  
+    // Si no hay vendedor_id en el primer item, no sigas
+    if (!carrito[0]?.vendedor_id) {
+      alert("El producto no tiene vendedor_id. Revisa cómo se agregó al carrito.");
+      setIsProcessing(false);
+      return;
+    }
+  
     try {
       const response = await fetch('http://localhost:3000/pedidos/crear', {
         method: 'POST',
@@ -19,35 +30,36 @@ function Carrito() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          usuario_id: 1, // Ajustar según el usuario logueado
+          usuario_id: 1, // <- reemplazar si estás usando AuthContext
           carrito: carrito.map(item => ({
             producto_id: item.id,
             cantidad: item.cantidad,
-            precio: item.precio
+            precio: item.precio,
+            vendedor_id: item.vendedor_id, // 👈 asegurado
           }))
         }),
       });
-
+  
       if (!response.ok) throw new Error('Error al crear el pedido');
       const data = await response.json();
-      console.log(data);
-
+      console.log("Respuesta del backend:", data);
+  
       setShowSuccessMessage(true);
       vaciarCarrito();
-
+  
       setTimeout(() => {
         setShowSuccessMessage(false);
         setIsProcessing(false);
         navigate('/resumen-compra', { state: { carrito, total: calcularTotal() } });
       }, 3000);
-
     } catch (error) {
       console.error('Error al procesar el pago:', error);
       alert('Hubo un error al procesar tu pedido');
       setIsProcessing(false);
     }
   };
-
+  
+  
   return (
     <div className="carrito-container">
       <SidebarPerfil />
